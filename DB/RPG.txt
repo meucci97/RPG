@@ -1,0 +1,8 @@
+SQL:
+CREATE  TABLE "main"."Personnage" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "nom " VARCHAR NOT NULL , "pv" FLOAT, "vitesse" FLOAT, "force" FLOAT, "defense" FLOAT, "niveau" INTEGER, "progression" DOUBLE, "idClasse" INTEGER NOT NULL , "idArme" INTEGER NOT NULL , "idArmure" INTEGER NOT NULL )
+
+CREATE TABLE "Arme" ("id" INTEGER PRIMARY KEY   AUTOINCREMENT NOT NULL  UNIQUE , "nom" VARCHAR NOT NULL , "impactVitesse" FLOAT, "niveauMin" INTEGER, "attaqueMax" FLOAT, "attaqueMin" FLOAT, "chanceCrit" FLOAT, "degaCrit" FLOAT)
+
+CREATE TABLE "Classe" ("id" INTEGER PRIMARY KEY   AUTOINCREMENT NOT NULL  UNIQUE , "nom" VARCHAR NOT NULL , "multiplicateurPV" FLOAT, "multiplicateurVitesse" FLOAT, "multiplicateurAttaque" FLOAT, "multiplicateurDefense" FLOAT)
+
+CREATE TABLE "Armure" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "nom" VARCHAR NOT NULL , "impactVitesse" FLOAT, "niveauMin" INTEGER, "defense" FLOAT)
