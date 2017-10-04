@@ -65,6 +65,15 @@ public class Arme extends Equipement {
         this.degatCrit = degatCrit;
     }
 
+    public float calculDegat(){
+        float degat=attaqueMin;
+        degat=degat+(float)Math.random()%(attaqueMax-attaqueMin);
+        if((float)Math.random()<this.chanceCrit){
+            return degat*degatCrit;
+        }
+        return degat;
+    }
+    
     private float attaqueMax;
     private float attaqueMin;
     private float chanceCrit; //pourcentage

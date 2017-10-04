@@ -34,4 +34,36 @@ public abstract class Entite {
         this.force = force;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public float getPv() {
+        return pv;
+    }
+
+    public int getNiveau() {
+        return niveau;
+    }
+
+    public double getProgression() {
+        return progression;
+    }
+
+    public float getVitesse() {
+        return vitesse;
+    }
+
+    public float getDefense() {
+        return defense;
+    }
+
+    public float getForce() {
+        return force;
+    }
+
 }
