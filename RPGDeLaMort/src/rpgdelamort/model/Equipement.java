@@ -2,9 +2,9 @@ package rpgdelamort.model;
 
 public abstract class Equipement {
 
-	private int id;
-	private String nom;
-	private float impactVitesse;
-	private int niveauMin;
+	protected int id;
+	protected String nom;
+	protected float impactVitesse;
+	protected int niveauMin;
 
 }
