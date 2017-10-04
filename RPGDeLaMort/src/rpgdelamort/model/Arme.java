@@ -1,17 +1,44 @@
 package rpgdelamort.model;
 
 public class Arme extends Equipement {
-    
-    public Arme(String nom){
-        
+
+    public Arme(String nom) {
+        super();
+        this.setNom(nom);
+        this.setImpactVitesse(1f);
+        this.setNiveauMin(1);
+        this.setAttaqueMin(1f);
+        this.setAttaqueMax(1f);
+        this.setChanceCrit(0f);
+        this.setDegatCrit(1f);
     }
+
+    public Arme(String nom,
+            float impactVitesse,
+            int niveauMin, 
+            float attaqueMax,
+            float attaqueMin,
+            float chanceCrit, 
+            float degatCrit) {
+        
+        super();
+        this.setNom(nom);
+        this.setImpactVitesse(impactVitesse);
+        this.setNiveauMin(niveauMin);
+        this.attaqueMax = attaqueMax;
+        this.attaqueMin = attaqueMin;
+        this.chanceCrit = chanceCrit;
+        this.degatCrit = degatCrit;
+    }
+    
+    
 
     public float getAttaqueMax() {
         return attaqueMax;
     }
 
-    public float getAtaqqueMin() {
-        return ataqqueMin;
+    public float getAttaqueMin() {
+        return attaqueMin;
     }
 
     public float getChanceCrit() {
@@ -26,8 +53,8 @@ public class Arme extends Equipement {
         this.attaqueMax = attaqueMax;
     }
 
-    public void setAtaqqueMin(float ataqqueMin) {
-        this.ataqqueMin = ataqqueMin;
+    public void setAttaqueMin(float ataqqueMin) {
+        this.attaqueMin = ataqqueMin;
     }
 
     public void setChanceCrit(float chanceCrit) {
@@ -38,11 +65,9 @@ public class Arme extends Equipement {
         this.degatCrit = degatCrit;
     }
 
-    
-
     private float attaqueMax;
-    private float ataqqueMin;
-    private float chanceCrit;
-    private float degatCrit;
+    private float attaqueMin;
+    private float chanceCrit; //pourcentage
+    private float degatCrit;    //multiplicateur de dégat lors des crits
 
 }
