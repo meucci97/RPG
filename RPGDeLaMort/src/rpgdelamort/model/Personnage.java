@@ -48,4 +48,26 @@ public class Personnage extends Entite {
         this.classe = classe;
     }
 
+    public boolean attaque(Personnage p){
+        if(p.esquive()){
+            return false;
+        }else{
+            return p.subirAttaque(arme.get(0).calculDegat()*this.force);
+        }
+    }
+    
+    public boolean subirAttaque(float attaque){
+        if(attaque>=this.pv){
+            this.pv=0;
+            return true;
+        }else{
+            this.pv=this.pv-attaque;
+            return false;
+        }
+    }
+    
+    public boolean esquive(){
+        return false;
+    }
+    
 }
