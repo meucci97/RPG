@@ -8,9 +8,9 @@ public class Arme extends Equipement {
         this.setImpactVitesse(1f);
         this.setNiveauMin(1);
         this.setAttaqueMin(1f);
-        this.setAttaqueMax(1f);
-        this.setChanceCrit(0f);
-        this.setDegatCrit(1f);
+        this.setAttaqueMax(10f);
+        this.setChanceCrit(0.5f);
+        this.setDegatCrit(2f);
     }
 
     public Arme(String nom,
@@ -68,7 +68,6 @@ public class Arme extends Equipement {
     @SuppressWarnings("empty-statement")
     public float[] calculDegat(){ //retourne un tableau de flottants [dégats, {0=pasCrit|1=crit}] 
         float degat=attaqueMin;
-        //degat=degat+(float)Math.random()%(attaqueMax-attaqueMin); je ne pense pas que ce soit un modulo
         degat=degat+(float)Math.random()*(attaqueMax-attaqueMin);
         if((float)Math.random()<this.chanceCrit){
             float[] tab = {degat*degatCrit, 1}; 
