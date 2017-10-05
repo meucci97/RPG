@@ -34,6 +34,12 @@ public class CombatController {
         this.p2 = p2;
     }
     
+    public Personnage combat(){ //mettre un parametre numero de combat?
+        
+        this.getP1().attaque(this.getP2());
+        return p1;
+    }
+    
     
     private Personnage p1;
     private Personnage p2;

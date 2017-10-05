@@ -1,5 +1,6 @@
 package rpgdelamort.model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Personnage extends Entite {
@@ -48,21 +49,29 @@ public class Personnage extends Entite {
         this.classe = classe;
     }
 
-    public boolean attaque(Personnage p){
+    public float[] attaque(Personnage p){ //retourne un tableau de flottant: dégats envoyés, crit(1f)|pas crit(0f), degats subis
+        float tab[] = {};
         if(p.esquive()){
-            return false;
+            tab[0] = 0f; //degats envoyés
+            tab[1] = 0f; //critique
+            tab[2] = 0f; //degats infligés
         }else{
-            return p.subirAttaque(arme.get(0).calculDegat()*this.force);
+            float[] degatArme = arme.get(0).calculDegat();
+            tab[0] = degatArme[0]; //degats envoyés
+            tab[1] = degatArme[1]; //critique
+            tab[2] = p.subirAttaque(tab[0]*this.force); //degats infligés
+            
         }
+        return tab;
     }
     
-    public boolean subirAttaque(float attaque){
+    public float subirAttaque(float attaque){
         if(attaque>=this.pv){
             this.pv=0;
-            return true;
+            return attaque;
         }else{
             this.pv=this.pv-attaque;
-            return false;
+            return attaque;
         }
     }
     

@@ -15,14 +15,28 @@ import rpgdelamort.model.Personnage;
  * @author p1711638
  */
 public class JeuController {
+
+    public ArrayList<Personnage> getTabPersos() {
+        return tabPersos;
+    }
+
     
     public JeuController(){
+        this.tabPersos = new ArrayList<>();
+    }
+    
+    public Personnage combat(){
         ArrayList<Arme> tabArme = new ArrayList<>();
         tabArme.add(new Arme("Epée"));
         
-        Personnage p1 = new Personnage("so6",100f,1,0d,1f,10f,5f,tabArme,null, new Classe("Saucisse"));
-        Personnage p2 = new Personnage("stefano",110f,1,0d,1f,12f,7f,tabArme,null, new Classe("Tartare"));
-                
+        this.getTabPersos().add(new Personnage("so6",100f,1,0d,1f,10f,5f,tabArme,null, new Classe("Saucisse")));
+        this.getTabPersos().add(new Personnage("stefano",110f,1,0d,1f,12f,7f,tabArme,null, new Classe("Tartare")));
+        
+        CombatController c = new CombatController(this.getTabPersos().get(0),this.getTabPersos().get(0));
+        
+        return c.combat(); //fight!
     }
+    
+    private ArrayList<Personnage> tabPersos;
     
 }

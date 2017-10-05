@@ -65,13 +65,17 @@ public class Arme extends Equipement {
         this.degatCrit = degatCrit;
     }
 
-    public float calculDegat(){
+    @SuppressWarnings("empty-statement")
+    public float[] calculDegat(){ //retourne un tableau de flottants [dégats, {0=pasCrit|1=crit}] 
         float degat=attaqueMin;
-        degat=degat+(float)Math.random()%(attaqueMax-attaqueMin);
+        //degat=degat+(float)Math.random()%(attaqueMax-attaqueMin); je ne pense pas que ce soit un modulo
+        degat=degat+(float)Math.random()*(attaqueMax-attaqueMin);
         if((float)Math.random()<this.chanceCrit){
-            return degat*degatCrit;
+            float[] tab = {degat*degatCrit, 1}; 
+            return tab;
         }
-        return degat;
+        float[] tab = {degat, 0}; 
+        return tab;
     }
     
     private float attaqueMax;
