@@ -1,0 +1,1 @@
+Veuillez installer la police SF Slapstick Comic Shaded Oblique si vous ne l'avez pas installer.
