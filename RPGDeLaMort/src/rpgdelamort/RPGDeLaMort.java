@@ -1,7 +1,9 @@
 package rpgdelamort;
 
+<<<<<<< HEAD
 import Singleton.SqliteConnection;
 import java.sql.ResultSet;
+>>>>>>> 52dcdaef3fde4340fec4cb2ecfacbb6b48db491b
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,6 +21,7 @@ public class RPGDeLaMort {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+<<<<<<< HEAD
         SqliteConnection maBase = new SqliteConnection("rpg");
         System.out.println(maBase.getInstance());
         try {
@@ -37,6 +40,7 @@ public class RPGDeLaMort {
             System.out.println("Erreur2");
 
         }
+>>>>>>> 52dcdaef3fde4340fec4cb2ecfacbb6b48db491b
     }
 
 }

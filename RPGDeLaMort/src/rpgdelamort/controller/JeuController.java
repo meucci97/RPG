@@ -32,7 +32,7 @@ public class JeuController {
         this.getTabPersos().add(new Personnage("so6",100f,1,0d,1f,10f,5f,tabArme,null, new Classe("Saucisse")));
         this.getTabPersos().add(new Personnage("stefano",110f,1,0d,1f,12f,7f,tabArme,null, new Classe("Tartare")));
         
-        CombatController c = new CombatController(this.getTabPersos().get(0),this.getTabPersos().get(0));
+        CombatController c = new CombatController(this.getTabPersos().get(0),this.getTabPersos().get(1));
         
         return c.combat(); //fight!
     }

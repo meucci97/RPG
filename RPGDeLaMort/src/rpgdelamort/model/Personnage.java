@@ -50,16 +50,16 @@ public class Personnage extends Entite {
     }
 
     public float[] attaque(Personnage p){ //retourne un tableau de flottant: dégats envoyés, crit(1f)|pas crit(0f), degats subis
-        float tab[] = {};
-        if(p.esquive()){
-            tab[0] = 0f; //degats envoyés
-            tab[1] = 0f; //critique
-            tab[2] = 0f; //degats infligés
-        }else{
+        float tab[] = {0f,0f,0f};
+        
+        if(!p.esquive()){
             float[] degatArme = arme.get(0).calculDegat();
-            tab[0] = degatArme[0]; //degats envoyés
+            tab[0] = degatArme[0]*this.force; //degats envoyés
             tab[1] = degatArme[1]; //critique
-            tab[2] = p.subirAttaque(tab[0]*this.force); //degats infligés
+            tab[2] = p.subirAttaque(tab[0]); //degats infligés
+            
+        }
+        else{
             
         }
         return tab;
@@ -68,11 +68,10 @@ public class Personnage extends Entite {
     public float subirAttaque(float attaque){
         if(attaque>=this.pv){
             this.pv=0;
-            return attaque;
         }else{
             this.pv=this.pv-attaque;
-            return attaque;
         }
+        return attaque;
     }
     
     public boolean esquive(){
