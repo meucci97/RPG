@@ -66,16 +66,20 @@ public class Personnage extends Entite {
     }
     
     public float subirAttaque(float attaque){
-        if(attaque>=this.pv){
-            this.pv=0;
+        if(attaque>=this.pvCourant){
+            this.pvCourant=0;
         }else{
-            this.pv=this.pv-attaque;
+            this.pvCourant=this.pvCourant-attaque;
         }
         return attaque;
     }
     
     public boolean esquive(){
         return false;
+    }
+    
+    public boolean isAlive(){
+        return this.getPvCourant()> 0f;
     }
     
 }
