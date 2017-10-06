@@ -5,6 +5,7 @@
  */
 package rpgdelamort.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import rpgdelamort.model.Personnage;
@@ -39,16 +40,53 @@ public class CombatController {
     }
 
     public Personnage combat() { //mettre un parametre numero de combat?
+        //System.out.println(this.p2.getPv());
+        Map<String, String> tabInfoCombat = new HashMap<>();
+        tabInfoCombat.put("p1", p1.getNom());
+        tabInfoCombat.put("p2", p2.getNom());
 
+        this.vueCombat.afficherDebutCombat(tabInfoCombat);
+        tabInfoCombat.clear();
+
+        double ordre = Math.random();
+        ArrayList<Personnage> tabPersos = new ArrayList<>();
+
+        if (ordre < 0.5) {
+            tabPersos.add(p1);
+            tabPersos.add(p2);
+        } else {
+            tabPersos.add(p2);
+            tabPersos.add(p1);
+        }
+        Personnage pTemp = tabPersos.get(0);
+
+        while (p1.isAlive() && p2.isAlive()) {
+            this.echange(tabPersos.get(0), tabPersos.get(1));
+
+            //echange attaquant/defenseur
+            pTemp = tabPersos.get(0);
+            tabPersos.set(0, tabPersos.get(1));
+            tabPersos.set(1, pTemp);
+        }
+        tabInfoCombat.put("nomGagnant", tabPersos.get(1).getNom());//le gagnant est celui qui a mis le dernier coup et est passé defenseur
+        tabInfoCombat.put("nomPerdant", tabPersos.get(0).getNom());
+        this.vueCombat.afficherFinCombat(tabInfoCombat);
+
+        this.finCombat();
+
+        return (tabPersos.get(1));
+    }
+
+    private void echange(Personnage p1, Personnage p2) {  //p1 attaquant, p2 defenseur
         Map<String, String> tabInfoCombat = new HashMap<>();
 
-        tabInfoCombat.put("nomAttaquant", this.p1.getNom());
-        tabInfoCombat.put("nomDefenseur", this.p2.getNom());
-        tabInfoCombat.put("armeAttaquant", this.p2.getArmeEquiper().getNom());
-        tabInfoCombat.put("pvAttaquant", Float.toString(this.p1.getPv()));
-        tabInfoCombat.put("pvDefenseur", Float.toString(this.p2.getPv()));
+        tabInfoCombat.put("nomAttaquant", p1.getNom());
+        tabInfoCombat.put("nomDefenseur", p2.getNom());
+        tabInfoCombat.put("armeAttaquant", p2.getArmeEquiper().getNom());
+        tabInfoCombat.put("pvAttaquant", Integer.toString(Math.round(p1.getPv())));
+        tabInfoCombat.put("pvDefenseur", Integer.toString(Math.round(p2.getPv())));
 
-        float[] tabInfoDegat = this.getP1().attaque(this.getP2()); //attaque
+        float[] tabInfoDegat = p1.attaque(p2); //attaque
 
         if (tabInfoDegat[0] == 0f) { //esquive
             tabInfoCombat.put("esquive", "true");
@@ -62,11 +100,16 @@ public class CombatController {
             tabInfoCombat.put("critique", null);
         }
 
-        tabInfoCombat.put("degat", Float.toString(tabInfoDegat[0]));
-        tabInfoCombat.put("degatSubis", Float.toString(tabInfoDegat[2]));
+        tabInfoCombat.put("degat", Integer.toString(Math.round(tabInfoDegat[0])));
+        tabInfoCombat.put("degatSubis", Integer.toString(Math.round(tabInfoDegat[2])));
 
         this.vueCombat.afficherAttaque(tabInfoCombat);
-        return p1;
+    }
+
+    private void finCombat() {
+        //remettre les pv;
+        this.p1.setPvCourant(this.p1.getPv());
+        this.p2.setPvCourant(this.p2.getPv());
     }
 
     private Personnage p1;

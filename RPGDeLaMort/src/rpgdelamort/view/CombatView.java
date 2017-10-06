@@ -13,8 +13,14 @@ public class CombatView {
 
     }
 
+    public void afficherDebutCombat(Map<String, String> tabInfoCombat) {
+
+        System.out.println("************************************************ " + tabInfoCombat.get("p1").toUpperCase() + " VS " + tabInfoCombat.get("p2").toUpperCase() + " *****************************************************");
+
+    }
+
     public void afficherAttaque(Map<String, String> tabInfoCombat) {
-        System.out.println(tabInfoCombat.get("nomAttaquant") + " attaque " + tabInfoCombat.get("nomDefenseur") + " avec " + tabInfoCombat.get("armeAttaquant"));
+        System.out.println(tabInfoCombat.get("nomAttaquant") + "(" + tabInfoCombat.get("pvAttaquant") + ") attaque " + tabInfoCombat.get("nomDefenseur") + "(" + tabInfoCombat.get("pvDefenseur") + ") avec " + tabInfoCombat.get("armeAttaquant"));
 
         String attaque = tabInfoCombat.get("nomDefenseur") + " ";
         if (tabInfoCombat.get("esquive") != null) {
@@ -25,11 +31,19 @@ public class CombatView {
             if (tabInfoCombat.get("critique") != null) {
                 attaque = attaque + "Coup critique! ";
             }
-            attaque = attaque + tabInfoCombat.get("nomAttaquant") + " inflige " + tabInfoCombat.get("degat") + "! " + tabInfoCombat.get("nomDefenseur") + " les réduit et ne subit que " + tabInfoCombat.get("degatSubis")+ ". ";
+            attaque = attaque + tabInfoCombat.get("nomAttaquant") + " inflige " + tabInfoCombat.get("degat") + "! " + tabInfoCombat.get("nomDefenseur") + " les réduit et ne subit que " + tabInfoCombat.get("degatSubis") + ". ";
 
         }
 
         System.out.println(attaque);
+
+    }
+
+    public void afficherFinCombat(Map<String, String> tabInfoCombat) {
+        System.out.println("");
+        System.out.println(tabInfoCombat.get("nomPerdant")+ " meurt!" );
+        System.out.println("Le combat est remporté par " + tabInfoCombat.get("nomGagnant")+ "!" );
+        System.out.println("______________________________________________________________________________________________________________________");
 
     }
 
