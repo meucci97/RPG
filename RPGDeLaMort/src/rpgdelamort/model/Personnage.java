@@ -66,20 +66,40 @@ public class Personnage extends Entite {
     }
     
     public float subirAttaque(float attaque){
-        if(attaque>=this.pvCourant){
+        if(reductionDegat(attaque)>=this.pvCourant){
             this.pvCourant=0;
         }else{
-            this.pvCourant=this.pvCourant-attaque;
+            this.pvCourant=this.pvCourant-reductionDegat(attaque);
         }
-        return attaque;
+        return reductionDegat(attaque);
     }
     
     public boolean esquive(){
-        return false;
+        float vitesseReelle = this.getVitesse()*this.getArmure().getImpactVitesse()*this.getArmeEquiper().getImpactVitesse(); //reduction de la vitesse par l'equipement
+        return Math.random() < (((40*Math.log10(vitesseReelle))+10))/100;
     }
     
     public boolean isAlive(){
         return this.getPvCourant()> 0f;
     }
     
+    public void appliqueModifClasse(){//quand le perso levelUp
+        this.force = this.force * this.getClasse().getMultiplicateurAttaque();
+        this.pv *= this.getClasse().getMultiplicateurPV();
+        this.pvCourant *= this.pv; //remise a niveau des pvCourant après modiification des pv max
+        this.defense *= this.getClasse().getMultiplicateurDefense();
+        this.vitesse *= this.getClasse().getMultiplicateurVitesse();
+    }
+    
+    public double getXpToLevelUp(){
+        return 4*(Math.pow(this.getNiveau()+1,2)); //lvl A --> lvl A + 1 necessite 4(A+1)² d'experience
+    }
+    
+    public double getXpDonnee(){
+        return 10*this.getNiveau();
+    }
+    
+    public float reductionDegat(float degat){
+        return (float) (degat* ((100-((40*Math.log10(((this.getArmure().getDefense())+ this.getDefense())/3))+10))/100));
+    }
 }

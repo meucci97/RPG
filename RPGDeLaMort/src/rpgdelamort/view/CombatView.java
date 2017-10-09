@@ -15,12 +15,13 @@ public class CombatView {
 
     public void afficherDebutCombat(Map<String, String> tabInfoCombat) {
 
-        System.out.println("************************************************ " + tabInfoCombat.get("p1").toUpperCase() + " VS " + tabInfoCombat.get("p2").toUpperCase() + " *****************************************************");
+        System.out.println("************************************************ " + tabInfoCombat.get("p1").toUpperCase()+" niv "+ tabInfoCombat.get("lvlP1") + " VS " + tabInfoCombat.get("p2").toUpperCase() +" niv "+ tabInfoCombat.get("lvlP2") +" *****************************************************");
 
     }
 
     public void afficherAttaque(Map<String, String> tabInfoCombat) {
-        System.out.println(tabInfoCombat.get("nomAttaquant") + "(" + tabInfoCombat.get("pvAttaquant") + ") attaque " + tabInfoCombat.get("nomDefenseur") + "(" + tabInfoCombat.get("pvDefenseur") + ") avec " + tabInfoCombat.get("armeAttaquant"));
+        System.out.println("----");
+        System.out.println(tabInfoCombat.get("nomAttaquant") + "(" + tabInfoCombat.get("pvAttaquant") + "pv) attaque " + tabInfoCombat.get("nomDefenseur") + "(" + tabInfoCombat.get("pvDefenseur") + "pv) avec " + tabInfoCombat.get("armeAttaquant"));
 
         String attaque = tabInfoCombat.get("nomDefenseur") + " ";
         if (tabInfoCombat.get("esquive") != null) {
@@ -42,7 +43,7 @@ public class CombatView {
     public void afficherFinCombat(Map<String, String> tabInfoCombat) {
         System.out.println("");
         System.out.println(tabInfoCombat.get("nomPerdant")+ " meurt!" );
-        System.out.println("Le combat est remporté par " + tabInfoCombat.get("nomGagnant")+ "!" );
+        System.out.println("La manche est remportée par " + tabInfoCombat.get("nomGagnant")+ "!" );
         System.out.println("______________________________________________________________________________________________________________________");
 
     }
