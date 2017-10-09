@@ -76,6 +76,19 @@ public abstract class Entite {
     public void setPvCourant(float pvCourant) {
         this.pvCourant = pvCourant;
     }
+
+    public void setNiveau(int niveau) {
+        this.niveau = niveau;
+    }
+
+    public void setProgression(double progression) {
+        this.progression = progression;
+    }
+
+    public void setDefense(float defense) {
+        this.defense = defense;
+    }
+    
     
     
 

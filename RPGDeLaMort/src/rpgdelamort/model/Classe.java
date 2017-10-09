@@ -4,10 +4,10 @@ public class Classe {
     
     public Classe(String nom){
         this.setNom(nom);
-        this.setMultiplicateurVitesse(1f);  
-        this.setMultiplicateurAttaque(1f); 
-        this.setMultiplicateurDefense(1f);
-        this.setMultiplicateurPV(1f);        
+        this.setMultiplicateurVitesse(1.2f);  
+        this.setMultiplicateurAttaque(1.2f); 
+        this.setMultiplicateurDefense(1.05f);
+        this.setMultiplicateurPV(1.2f);        
     }
     
     public Classe(String nom,

@@ -44,6 +44,10 @@ public class CombatController {
         Map<String, String> tabInfoCombat = new HashMap<>();
         tabInfoCombat.put("p1", p1.getNom());
         tabInfoCombat.put("p2", p2.getNom());
+        tabInfoCombat.put("lvlP1", Integer.toString(p1.getNiveau()));
+        tabInfoCombat.put("lvlP2", Integer.toString(p2.getNiveau()));
+        tabInfoCombat.put("progressionP1", Integer.toString((int) Math.round(p1.getProgression())));
+        tabInfoCombat.put("progressionP2", Integer.toString((int) Math.round(p2.getProgression())));
 
         this.vueCombat.afficherDebutCombat(tabInfoCombat);
         tabInfoCombat.clear();
@@ -72,7 +76,7 @@ public class CombatController {
         tabInfoCombat.put("nomPerdant", tabPersos.get(0).getNom());
         this.vueCombat.afficherFinCombat(tabInfoCombat);
 
-        this.finCombat();
+        this.finCombat(tabPersos.get(1),tabPersos.get(0));
 
         return (tabPersos.get(1));
     }
@@ -83,8 +87,9 @@ public class CombatController {
         tabInfoCombat.put("nomAttaquant", p1.getNom());
         tabInfoCombat.put("nomDefenseur", p2.getNom());
         tabInfoCombat.put("armeAttaquant", p2.getArmeEquiper().getNom());
-        tabInfoCombat.put("pvAttaquant", Integer.toString(Math.round(p1.getPv())));
-        tabInfoCombat.put("pvDefenseur", Integer.toString(Math.round(p2.getPv())));
+        tabInfoCombat.put("pvAttaquant", Integer.toString(Math.round(p1.getPvCourant())));
+        tabInfoCombat.put("pvDefenseur", Integer.toString(Math.round(p2.getPvCourant())));
+       
 
         float[] tabInfoDegat = p1.attaque(p2); //attaque
 
@@ -106,10 +111,38 @@ public class CombatController {
         this.vueCombat.afficherAttaque(tabInfoCombat);
     }
 
-    private void finCombat() {
+    private void finCombat(Personnage gagnant, Personnage perdant) {
         //remettre les pv;
         this.p1.setPvCourant(this.p1.getPv());
         this.p2.setPvCourant(this.p2.getPv());
+        
+        
+        double progression = gagnant.getProgression();
+        double xpToLevelUp = gagnant.getXpToLevelUp();
+        double xpGagnee = perdant.getXpDonnee(); //XP donnée par le eprdant au gagnant = 10*niveau
+        
+        if(progression+xpGagnee > xpToLevelUp ){ //si le gain d'xp fait monter de niveau
+            gagnant.setNiveau(gagnant.getNiveau()+1);
+            gagnant.appliqueModifClasse(); //application des modificateurs de classe au level up          
+            
+            xpGagnee -= gagnant.getXpToLevelUp()-gagnant.getProgression();
+            gagnant.setProgression(0); //mise a 0 de la progression
+            
+            while(xpGagnee > gagnant.getXpToLevelUp()){ //on traite le cas ou le personnage peut gagner plusieurs niveaux en un seul combat
+                gagnant.setNiveau(gagnant.getNiveau()+1);
+                xpGagnee -= gagnant.getXpToLevelUp();
+                gagnant.appliqueModifClasse(); //application des modificateurs de classe au level up              
+            }
+            
+            gagnant.setProgression(xpGagnee); //on enlève l'Xp ayant servie a lvl up et on ajoute ce qui reste a la progression en cours
+            
+            
+            
+            
+        }else{ //pas monté de niv
+            gagnant.setProgression(gagnant.getProgression()+xpGagnee);
+        }        
+        
     }
 
     private Personnage p1;
