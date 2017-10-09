@@ -33,6 +33,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import rpgdelamort.model.Arme;
+import rpgdelamort.model.Armure;
+import rpgdelamort.model.Classe;
+import rpgdelamort.model.Personnage;
 import static rpgdelamort.view.GetComboItem.getListPersonnage;
 
 /**
@@ -205,13 +209,48 @@ public class SelectionnerPersonnageView extends JPanel implements ActionListener
             fenetre.setContentPane(menu);
             fenetre.pack();
         }else if( e.getSource()==valider){
-            joueur1Select= (String)joueur1.getSelectedItem();
+            Personnage p1, p2;
+            Arme a1,a2;
+            Armure ar1,ar2;
+            Classe cl1, cl2;
+            
+              
+              try {
+            SqliteConnection maBase = new SqliteConnection("rpg");
+             joueur1Select= (String)joueur1.getSelectedItem();
              joueur2Select= (String)joueur2.getSelectedItem();
              idJoueur=joueur1Select.split("-");
-              System.out.println(idJoueur[0]);
-               idJoueur=joueur2Select.split("-");
-              System.out.println(idJoueur[0]);
-              
+             System.out.println(idJoueur[0]);
+             
+            ResultSet rs = maBase.getInstance().createStatement().executeQuery("SELECT * FROM Personnage INNER JOIN Arme ON idArmePersonnage=idArme "
+                    + "INNER JOIN Armure ON idArmurePersonnage=idArmure INNER JOIN Classe ON idClassePersonnage=idClasse Where idPersonnage="+idJoueur[0] );
+            rs.next();
+                          System.out.println();
+                System.out.println("id: " + rs.getInt("idPersonnage") + " nom: " + rs.getString("nomPersonnage") + " pv: " + rs.getFloat("pvPersonnage")
+                        + " niveau: " + rs.getString("niveauPersonnage") + " progression: " + rs.getDouble("progressionPersonnage")
+                        + " vitesse: " + rs.getFloat("vitessePersonnage") + " defense: " + rs.getFloat("defensePersonnage")
+                        + " force: " + rs.getFloat("forcePersonnage"));
+                System.out.println("L'arme de " + rs.getString("nomPersonnage") + " est: ");
+                System.out.println("ID Arme: " + rs.getString("idArme") + " nomArme: " + rs.getString("nomArme") + " Impacte vitesse: " + rs.getFloat("impactVitesseArme")
+                        + " niveauMinArme: " + rs.getInt("niveauMinArme") + " Attaque Max: " + rs.getFloat("attaqueMaxArme") + " Attaque min: " + rs.getFloat("attaqueMinArme")
+                        + " Chance crit Arme: " + rs.getFloat("chanceCritArme") + " degaCritArme: " + rs.getFloat("degaCritArme"));
+
+                System.out.println("L'armure de " + rs.getString("nomPersonnage") + " est: ");
+                System.out.println("ID Armure: " + rs.getInt("idArmure") + " nomArmure: " + rs.getString("nomArmure") + " Impacte vitesse: " + rs.getFloat("impactVitesseArmure")
+                        + " niveauMinArmure: " + rs.getInt("niveauMinArmure") + " defenseArmure: " + rs.getFloat("defenseArmure"));
+                System.out.println("La classe de " + rs.getString("nomPersonnage") + " est: ");
+                System.out.println("ID Classe "+rs.getInt("idClasse")+ " nomClasse: "+ rs.getString("nomClasse")+ " multiplicateurPVClasse: "+rs.getFloat("multiplicateurPVClasse")
+                        + " multiplicateurVitesseClasse: "+rs.getFloat("multiplicateurVitesseClasse")+ " multiplicateurAttaqueClasse: "+rs.getFloat("multiplicateurAttaqueClasse")+
+                         " multiplicateurDefenseClasse: "+rs.getFloat("multiplicateurDefenseClasse"));
+            idJoueur=joueur2Select.split("-");
+             System.out.println(idJoueur[0]);
+            rs.close();
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+           
         }
           
     }

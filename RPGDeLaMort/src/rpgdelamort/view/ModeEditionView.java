@@ -153,6 +153,10 @@ public class ModeEditionView extends JPanel implements ActionListener {
            ModifierView modifView=new ModifierView(fenetre);
             fenetre.setContentPane(modifView);
             fenetre.pack();
+       }else if(e.getSource()==btnSupprimer){
+           SuppressionView suppressionView= new SuppressionView(fenetre);
+             fenetre.setContentPane(suppressionView);
+            fenetre.pack();
        }
     }
 }

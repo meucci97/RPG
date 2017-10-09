@@ -17,7 +17,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -28,7 +33,7 @@ import static rpgdelamort.view.GetComboItem.getListArmure;
  *
  * @author Stefano
  */
-public class ModifierView extends javax.swing.JPanel implements ActionListener{
+public class ModifierView extends javax.swing.JPanel implements ActionListener {
 
     private JFrame fenetre;
     private javax.swing.JButton btnValiderArme;
@@ -296,41 +301,55 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener{
         btnValiderArmure.addActionListener(this);
         btnAnnuler.addActionListener(this);
         cbIDPersonnage.addItemListener(new ItemListener() {
-     @Override
-     public void itemStateChanged(ItemEvent e) {
-         if(e.getStateChange()==e.DESELECTED){
-             
-         }else{
-               System.out.println(e.getItem());
-         
-         }
-       
-     }
- });
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == e.DESELECTED) {
+
+                } else {
+
+                    System.out.println(e.getItem());
+                    String idPerso = (String) e.getItem();
+
+                    String id[] = idPerso.split("-");
+                    System.out.println(id[0]);
+                    inputPersonnage(id[0]);
+
+                }
+
+            }
+        });
         cbIDArme.addItemListener(new ItemListener() {
-     @Override
-     public void itemStateChanged(ItemEvent e) {
-         if(e.getStateChange()==e.DESELECTED){
-             
-         }else{
-               System.out.println(e.getItem());
-         System.out.println("Change");
-         }
-       
-     }
- });
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == e.DESELECTED) {
+
+                } else {
+                    System.out.println(e.getItem());
+                    String idArme = (String) e.getItem();
+
+                    String id[] = idArme.split("-");
+                    System.out.println(id[0]);
+                    inputArme(id[0]);
+                }
+
+            }
+        });
         cbIDArmure.addItemListener(new ItemListener() {
-     @Override
-     public void itemStateChanged(ItemEvent e) {
-         if(e.getStateChange()==e.DESELECTED){
-             
-         }else{
-               System.out.println(e.getItem());
-         System.out.println("Change");
-         }
-       
-     }
- });
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == e.DESELECTED) {
+
+                } else {
+                    System.out.println(e.getItem());
+                    String idArmure = (String) e.getItem();
+
+                    String id[] = idArmure.split("-");
+                    System.out.println(id[0]);
+                    inputArmure(id[0]);
+                }
+
+            }
+        });
         initComponents();
     }
 
@@ -609,14 +628,71 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener{
         );
     }
 
-    private boolean insertPersonnage(String nomPersonnage, float pvPersonnage, float vitessePersonnage, float forcePerso, float defensePerso, int niveau, String classePerso, String armePerso, String armurePerso) {
+    private void inputPersonnage(String idPersonnage) {
+        try {
+            SqliteConnection maBase = new SqliteConnection("rpg");
+            ResultSet rs = maBase.getInstance().createStatement().executeQuery("SELECT * FROM Personnage WHERE idPersonnage=" + idPersonnage);
+            rs.next();
+            txtNomPersonnage.setText(rs.getString("nomPersonnage"));
+            txtPVPersonnage.setText(rs.getString("pvPersonnage"));
+            txtVitessePersonnage.setText(rs.getString("vitessePersonnage"));
+            txtForcePersonnage.setText(rs.getString("forcePersonnage"));
+            txtDefensePersonnage.setText(rs.getString("defensePersonnage"));
+            txtNiveauPersonnage.setText(rs.getString("niveauPersonnage"));
+            cbClasse.setSelectedIndex(rs.getInt("idClassePersonnage") - 1);
+            cbArmePersonnage.setSelectedIndex(rs.getInt("idArmePersonnage") - 1);
+            cbArmurePersonnage.setSelectedIndex(rs.getInt("idArmurePersonnage") - 1);
+            rs.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    private void inputArme(String idArme) {
+        try {
+            SqliteConnection maBase = new SqliteConnection("rpg");
+            ResultSet rs = maBase.getInstance().createStatement().executeQuery("SELECT * FROM Arme WHERE idArme=" + idArme);
+            rs.next();
+            txtNomArme.setText(rs.getString("nomArme"));
+            txtImpactVitesseArme.setText(rs.getString("impactVitesseArme"));
+            txtAttaqueMinArme.setText(rs.getString("attaqueMinArme"));
+            txtAttaqueMaxArme.setText(rs.getString("attaqueMaxArme"));
+            txtChanceCritArme.setText(rs.getString("chanceCritArme"));
+            txtDegatCritArme.setText(rs.getString("degaCritArme"));
+            rs.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    private void inputArmure(String idArmure) {
+        try {
+            SqliteConnection maBase = new SqliteConnection("rpg");
+            ResultSet rs = maBase.getInstance().createStatement().executeQuery("SELECT * FROM Armure WHERE idArmure=" + idArmure);
+            rs.next();
+            txtNomArmure.setText(rs.getString("nomArmure"));
+            txtImpactVitesseArmure.setText(rs.getString("impactVitesseArmure"));
+            txtDefense.setText(rs.getString("defenseArmure"));
+            rs.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    private boolean updatePersonnage(String idPersonnage, String nomPersonnage, float pvPersonnage, float vitessePersonnage, float forcePerso, float defensePerso, int niveau, String classePerso, String armePerso, String armurePerso) {
         SqliteConnection maBase = new SqliteConnection("rpg");
-        maBase.getInstance();
         try {
             Statement stmt = maBase.getInstance().createStatement();
-            String sql = "INSERT INTO Personnage(nomPersonnage,pvPersonnage,vitessePersonnage,forcePersonnage,defensePersonnage,niveauPersonnage, "
-                    + "idClassePersonnage,idArmePersonnage,idArmurePersonnage) VALUES('" + nomPersonnage + "'," + pvPersonnage + "," + vitessePersonnage + "," + forcePerso + "," + defensePerso + "," + niveau + "," + classePerso
-                    + "," + armePerso + "," + armurePerso + ");";
+
+            String sql = "UPDATE  Personnage set nomPersonnage='" + nomPersonnage + "',pvPersonnage=" + pvPersonnage + ",vitessePersonnage=" + vitessePersonnage + ",forcePersonnage=" + forcePerso + ",defensePersonnage=" + defensePerso + ","
+                    + "idClassePersonnage=" + classePerso + ",idArmePersonnage=" + armePerso + ",idArmurePersonnage=" + armurePerso + " where idPersonnage=" + idPersonnage + ";";
+
             System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
@@ -630,14 +706,15 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener{
         }
     }
 
-    private boolean insertArme(String nomArme, float impactVitesseArme, float attaqueMinArme, float attaqueMaxArme, float chanceCrtiArme, float degatCrit) {
+    private boolean updateArme(String idArme, String nomArme, float impactVitesseArme, float attaqueMinArme, float attaqueMaxArme, float chanceCrtiArme, float degatCrit) {
         SqliteConnection maBase = new SqliteConnection("rpg");
-        maBase.getInstance();
+      
         try {
             Statement stmt = maBase.getInstance().createStatement();
-            String sql = "INSERT INTO Arme(nomArme, impactVitesseArme, attaqueMinArme, attaqueMaxArme, chanceCritArme,degaCritArme"
-                    + ") VALUES('" + nomArme + "'," + impactVitesseArme + "," + attaqueMinArme + "," + attaqueMaxArme + "," + chanceCrtiArme + "," + degatCrit
-                    + ");";
+
+            String sql = "UPDATE  Arme set nomArme='" + nomArme + "',impactVitesseArme=" + impactVitesseArme + ",attaqueMinArme=" + attaqueMinArme + ",attaqueMaxArme=" + attaqueMaxArme + ",chanceCritArme=" + chanceCrtiArme + ","
+                    + "degaCritArme=" + degatCrit + " where idArme=" + idArme + ";";
+
             System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
@@ -651,14 +728,15 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener{
         }
     }
 
-    private boolean insertArumre(String nomArmure, float impactVitesseArmure, float defenseArmure) {
+    private boolean updateArumre(String idArmure, String nomArmure, float impactVitesseArmure, float defenseArmure) {
         SqliteConnection maBase = new SqliteConnection("rpg");
-        maBase.getInstance();
+  
         try {
             Statement stmt = maBase.getInstance().createStatement();
-            String sql = "INSERT INTO Armure(nomArmure, impactVitesseArmure, defenseArmure"
-                    + ") VALUES('" + nomArmure + "'," + impactVitesseArmure + "," + defenseArmure
-                    + ");";
+ 
+                String sql = "UPDATE  Armure set nomArmure='" + nomArmure + "',impactVitesseArmure=" + impactVitesseArmure + ",defenseArmure=" + defenseArmure +
+                  " where idArmure=" + idArmure + ";";
+
             System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
@@ -716,7 +794,10 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener{
                     idArmure = traitement[0];
                     System.out.println(niveau);
                     System.out.println("true");
-                    insertPersonnage(txtNomPersonnage.getText(), pvPerso, vitessePerso, forcePerso, defensePerso, niveau, idClasse, idArme, idArmure);
+                    String idPerso = (String) cbIDPersonnage.getSelectedItem();
+
+                    String id[] = idPerso.split("-");
+                    updatePersonnage(id[0], txtNomPersonnage.getText(), pvPerso, vitessePerso, forcePerso, defensePerso, niveau, idClasse, idArme, idArmure);
                     Menu menu = new Menu(fenetre);
                     fenetre.setContentPane(menu);
                     fenetre.pack();
@@ -740,8 +821,9 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener{
                     float attaqueMaxArme = Float.valueOf(txtAttaqueMaxArme.getText());
                     float chanceCrtiArme = Float.valueOf(txtChanceCritArme.getText());
                     float degatCrit = Float.valueOf(txtDegatCritArme.getText());
-
-                    insertArme(nomArme, impactVitesseArme, attaqueMinArme, attaqueMaxArme, chanceCrtiArme, degatCrit);
+                    String idArme = (String) cbIDArme.getSelectedItem();
+                    String id[] = idArme.split("-");
+                    updateArme(id[0],nomArme, impactVitesseArme, attaqueMinArme, attaqueMaxArme, chanceCrtiArme, degatCrit);
                     Menu menu = new Menu(fenetre);
                     fenetre.setContentPane(menu);
                     fenetre.pack();
@@ -760,7 +842,9 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener{
                     String nomArmure = txtNomArmure.getText();
                     float impactVitesseArmure = Float.valueOf(txtImpactVitesseArmure.getText());
                     float defenseArmure = Float.valueOf(txtDefense.getText());
-                    insertArumre(nomArmure, impactVitesseArmure, defenseArmure);
+                      String idArmure = (String)cbIDArmure.getSelectedItem();
+                    String id[] = idArmure.split("-");
+                    updateArumre(id[0],nomArmure, impactVitesseArmure, defenseArmure);
                     Menu menu = new Menu(fenetre);
                     fenetre.setContentPane(menu);
                     fenetre.pack();

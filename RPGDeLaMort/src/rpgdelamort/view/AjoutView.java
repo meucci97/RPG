@@ -643,7 +643,6 @@ public class AjoutView extends javax.swing.JPanel implements ActionListener {
                     float attaqueMaxArme = Float.valueOf(txtAttaqueMaxArme.getText());
                     float chanceCrtiArme = Float.valueOf(txtChanceCritArme.getText());
                     float degatCrit = Float.valueOf(txtDegatCritArme.getText());
-
                     insertArme(nomArme, impactVitesseArme, attaqueMinArme, attaqueMaxArme, chanceCrtiArme, degatCrit);
                     Menu menu = new Menu(fenetre);
                     fenetre.setContentPane(menu);
