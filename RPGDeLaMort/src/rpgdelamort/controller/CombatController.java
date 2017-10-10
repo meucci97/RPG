@@ -146,38 +146,38 @@ public class CombatController {
             }
 
             gagnant.setProgression(xpGagnee); //on enlève l'Xp ayant servie a lvl up et on ajoute ce qui reste a la progression en cours
-            updatePersonnage(Integer.toString(gagnant.getId()), gagnant.getNom(), gagnant.getPv(), gagnant.getVitesse(), gagnant.getForce(), gagnant.getDefense(),gagnant.getProgression(), gagnant.getNiveau(), Integer.toString(gagnant.getClasse().getId()), Integer.toString(gagnant.getArmeEquiper().getId()), Integer.toString(gagnant.getClasse().getId())); //stefano je te déteste
+            updatePersonnage(Integer.toString(gagnant.getId()), gagnant.getNom(), gagnant.getPv(), gagnant.getVitesse(), gagnant.getForce(), gagnant.getDefense(), gagnant.getProgression(), gagnant.getNiveau(), Integer.toString(gagnant.getClasse().getId()), Integer.toString(gagnant.getArmeEquiper().getId()), Integer.toString(gagnant.getClasse().getId())); //stefano je te déteste
         } else { //pas monté de niv
             gagnant.setProgression(gagnant.getProgression() + xpGagnee);
         }
-        
-        
-        
+
         tabInfoCombat.put("niveauActuel", Integer.toString(gagnant.getNiveau()));
         this.vueCombat.afficherMonteeNiveau(tabInfoCombat);
 
     }
 
-      private boolean updatePersonnage(String idPersonnage, String nomPersonnage, float pvPersonnage, float vitessePersonnage, float forcePerso, float defensePerso,double progressionPersonnage, int niveau, String classePerso, String armePerso, String armurePerso) {
+    private boolean updatePersonnage(String idPersonnage, String nomPersonnage, float pvPersonnage, float vitessePersonnage, float forcePerso, float defensePerso, double progressionPersonnage, int niveau, String classePerso, String armePerso, String armurePerso) {
         SqliteConnection maBase = new SqliteConnection("rpg");
         try {
             Statement stmt = maBase.getInstance().createStatement();
 
             String sql = "UPDATE  Personnage set nomPersonnage='" + nomPersonnage + "',pvPersonnage=" + pvPersonnage + ",vitessePersonnage=" + vitessePersonnage + ",forcePersonnage=" + forcePerso + ",defensePersonnage=" + defensePerso + ","
-                    + "idClassePersonnage=" + classePerso + ",idArmePersonnage=" + armePerso + ",idArmurePersonnage=" + armurePerso +", progressionPersonnage="+progressionPersonnage+" where idPersonnage=" + idPersonnage + ";";
+                     +" progressionPersonnage="+progressionPersonnage+", niveauPersonnage="+niveau+" where idPersonnage=" + idPersonnage + ";";
 
             System.out.println(sql);
+            System.out.println(stmt);
             stmt.executeUpdate(sql);
-            stmt.close();
+            stmt.closeOnCompletion();
 
+            
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            
             return false;
         }
     }
-    
-    
+
     private Personnage p1;
     private Personnage p2;
     private CombatView vueCombat;

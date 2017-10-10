@@ -140,10 +140,10 @@ public class Menu extends JPanel implements ActionListener {
                             "Erreur nombre de personnage",
                             JOptionPane.ERROR_MESSAGE);
        }else{
-           
-           JOptionPane.showMessageDialog(fenetre, "Veuillez regarder la console pour le deroulement du combat");
            JeuController j = new JeuController(tabPersonnage);
            j.lanceTournoi();
+           JOptionPane.showMessageDialog(fenetre, "Veuillez regarder la console pour le deroulement du combat");
+           
        }
     }
 
