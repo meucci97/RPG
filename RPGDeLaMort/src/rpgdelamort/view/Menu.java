@@ -28,6 +28,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import rpgdelamort.controller.JeuController;
 import rpgdelamort.model.Arme;
 import rpgdelamort.model.Armure;
 import rpgdelamort.model.Classe;
@@ -115,20 +116,22 @@ public class Menu extends JPanel implements ActionListener {
         Armure ar1;
         Classe cl1;
         
-        ArrayList<Arme> tabArme = new ArrayList<>();
+        
         ResultSet rs = maBase.getInstance().createStatement().executeQuery("SELECT * FROM Personnage INNER JOIN Arme ON idArmePersonnage=idArme "
                 + "INNER JOIN Armure ON idArmurePersonnage=idArmure INNER JOIN Classe ON idClassePersonnage=idClasse");
             while (rs.next()) {
                 a1 = new Arme(rs.getInt("idArme"), rs.getString("nomArme"), rs.getFloat("impactVitesseArme"), rs.getFloat("attaqueMinArme"), rs.getFloat("attaqueMaxArme"), rs.getFloat("chanceCritArme"), rs.getFloat("degaCritArme"));
+                ArrayList<Arme> tabArme = new ArrayList<>();
                 tabArme.add(a1);
                 ar1 = new Armure(rs.getInt("idArmure"), rs.getString("nomArme"), rs.getFloat("impactVitesseArme"), rs.getFloat("defenseArmure"));
                 cl1 = new Classe(rs.getInt("idClasse"), rs.getString("nomClasse"), rs.getFloat("multiplicateurPVClasse"), rs.getFloat("multiplicateurVitesseClasse"), rs.getFloat("multiplicateurAttaqueClasse"), rs.getFloat("multiplicateurDefenseClasse"));
                 tabPersonnage.add(new Personnage(rs.getInt("idPersonnage"), rs.getString("nomPersonnage"), rs.getFloat("pvPersonnage"), rs.getInt("niveauPersonnage"), rs.getDouble("progressionPersonnage"), rs.getFloat("vitessePersonnage"), rs.getFloat("defensePersonnage"), rs.getFloat("forcePersonnage"), tabArme, ar1, cl1) );
-                tabArme.clear();
+                //tabArme.clear();
                 i++;
             }
             rs.close();
         }catch(Exception e){
+            System.out.println(e.getMessage());
             
         }
        if(i==0){
@@ -137,7 +140,10 @@ public class Menu extends JPanel implements ActionListener {
                             "Erreur nombre de personnage",
                             JOptionPane.ERROR_MESSAGE);
        }else{
+           
            JOptionPane.showMessageDialog(fenetre, "Veuillez regarder la console pour le deroulement du combat");
+           JeuController j = new JeuController(tabPersonnage);
+           j.lanceTournoi();
        }
     }
 

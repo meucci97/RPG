@@ -28,6 +28,10 @@ public class JeuController {
     public JeuController() {
         this.tabPersos = new ArrayList<>();
     }
+    
+    public JeuController(List<Personnage> tabPersos) {
+        this.tabPersos = tabPersos;
+    }
 
     public Personnage combat(Personnage p1, Personnage p2, int nbManche) {
         CombatController c = new CombatController(p1, p2);
@@ -60,7 +64,7 @@ public class JeuController {
     public Personnage lanceTournoi() {
         ArrayList<Arme> tabArme = new ArrayList<>(); //temporaire
         tabArme.add(new Arme("Epée"));
-        this.getTabPersos().add(new Personnage("so6", 100f, 1, 0d, 5f, 10f, 5f, tabArme, new Armure("Armure en bois"), new Classe("Saucisse")));
+        /*this.getTabPersos().add(new Personnage("so6", 100f, 1, 0d, 5f, 10f, 5f, tabArme, new Armure("Armure en bois"), new Classe("Saucisse")));
         this.getTabPersos().add(new Personnage("stefano", 100f, 1, 0d, 5f, 12f, 5f, tabArme, new Armure("Armure"), new Classe("Tartare")));
         this.getTabPersos().add(new Personnage("ALLO", 100f, 1, 0d, 5f, 12f, 5f, tabArme, new Armure("Armure"), new Classe("Tartare")));
         this.getTabPersos().add(new Personnage("est", 100f, 1, 0d, 5f, 12f, 5f, tabArme, new Armure("Armure"), new Classe("Tartare")));
@@ -76,7 +80,7 @@ public class JeuController {
         this.getTabPersos().add(new Personnage("ovvvsv", 100f, 1, 0d, 5f, 12f, 5f, tabArme, new Armure("Armure"), new Classe("Tartare")));
         this.getTabPersos().add(new Personnage("ov   vsv", 100f, 1, 0d, 5f, 12f, 5f, tabArme, new Armure("Armure"), new Classe("Tartare")));
         this.getTabPersos().add(new Personnage("ovrerretrttvsv", 100f, 1, 0d, 5f, 12f, 5f, tabArme, new Armure("Armure"), new Classe("Tartare")));
-        
+        */
         tabPersos = this.getTabPersos();
         //gestion du nombre impair de personnages
         if (tabPersos.size() % 2 == 1) {

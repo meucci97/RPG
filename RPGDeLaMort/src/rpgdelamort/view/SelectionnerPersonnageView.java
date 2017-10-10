@@ -34,6 +34,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import rpgdelamort.controller.JeuController;
 import rpgdelamort.model.Arme;
 import rpgdelamort.model.Armure;
 import rpgdelamort.model.Classe;
@@ -246,6 +247,10 @@ public class SelectionnerPersonnageView extends JPanel implements ActionListener
                 cl2 = new Classe(rs.getInt("idClasse"), rs.getString("nomClasse"), rs.getFloat("multiplicateurPVClasse"), rs.getFloat("multiplicateurVitesseClasse"), rs.getFloat("multiplicateurAttaqueClasse"), rs.getFloat("multiplicateurDefenseClasse"));
                 p2 = new Personnage(rs.getInt("idPersonnage"), rs.getString("nomPersonnage"), rs.getFloat("pvPersonnage"), rs.getInt("niveauPersonnage"), rs.getDouble("progressionPersonnage"), rs.getFloat("vitessePersonnage"), rs.getFloat("defensePersonnage"), rs.getFloat("forcePersonnage"), tabArme, ar2, cl2);
                 rs.close();
+                
+                JeuController j = new JeuController();
+                j.combat(p1,p2,nbManche);
+                
                 JOptionPane.showMessageDialog(fenetre, "Veuillez regarder la console pour le deroulement du combat");
                 Menu menu = new Menu(fenetre);
                 fenetre.setContentPane(menu);

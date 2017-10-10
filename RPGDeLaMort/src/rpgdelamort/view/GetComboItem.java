@@ -28,6 +28,7 @@ public interface GetComboItem {
                 mesPersonnage.add(rs.getInt("idPersonnage") + "-" + rs.getString("nomPersonnage") + "-Niv " + rs.getString("niveauPersonnage"));
 
             }
+            rs.close();
             return mesPersonnage;
         } catch (Exception ex) {
             System.out.println("Erreur2");
@@ -49,7 +50,7 @@ public interface GetComboItem {
                 mesArmes.add(rs.getInt("idArme") + "-" + rs.getString("nomArme"));
 
             }
-
+            rs.close();
             return mesArmes;
         } catch (Exception ex) {
             System.out.println("Erreur2");
@@ -71,6 +72,7 @@ public interface GetComboItem {
                 mesArmures.add(rs.getInt("idArmure") + "-" + rs.getString("nomArmure"));
 
             }
+            rs.close();
 
             return mesArmures;
         } catch (Exception ex) {
@@ -93,6 +95,7 @@ public interface GetComboItem {
                 mesClasse.add(rs.getInt("idClasse") + "-" + rs.getString("nomClasse"));
 
             }
+            rs.close();
 
             return mesClasse;
         } catch (Exception ex) {

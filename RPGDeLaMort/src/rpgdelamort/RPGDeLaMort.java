@@ -21,7 +21,7 @@ public class RPGDeLaMort {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        SqliteConnection maBase = new SqliteConnection("rpg");
+        /*SqliteConnection maBase = new SqliteConnection("rpg");
         System.out.println(maBase.getInstance());
         try {
             ResultSet rs = maBase.getInstance().createStatement().executeQuery("SELECT * FROM Personnage INNER JOIN Classe ON idClassePersonnage=idClasse INNER JOIN Arme ON idArmePersonnage=idArme INNER JOIN Armure ON idArmurePersonnage=idArmure");
@@ -54,8 +54,8 @@ public class RPGDeLaMort {
 
         JeuController jeu = new JeuController();
 
-        jeu.lanceTournoi();
-         MaFenetre F1=new MaFenetre();
+        jeu.lanceTournoi();*/
+        MaFenetre F1 = new MaFenetre();
 
         F1.setVisible(true);
     }
