@@ -89,7 +89,7 @@ public class JeuController {
 
     private Personnage tournoi(List<Personnage> tabPersos, int nbManche) {
         if(tabPersos.size() == 1){
-            return tabPersos.get(0);
+            return tabPersos.get(0); //fix sale pour les nombres de joueurs qui ne sont pas 2^n (solution propre a penser plus tard)
         }
         else if (tabPersos.size() == 2) {
             System.out.println(tabPersos.get(0).getNom());

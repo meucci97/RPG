@@ -16,8 +16,8 @@ import rpgdelamort.view.CombatView;
  * @author p1711638
  */
 public class CombatController {
-    
-    public CombatController(){
+
+    public CombatController() {
         this.p1 = null;
         this.p2 = null;
         this.vueCombat = new CombatView();
@@ -82,7 +82,7 @@ public class CombatController {
         tabInfoCombat.put("nomPerdant", tabPersos.get(0).getNom());
         this.vueCombat.afficherFinCombat(tabInfoCombat);
 
-        this.finCombat(tabPersos.get(1),tabPersos.get(0));
+        this.finCombat(tabPersos.get(1), tabPersos.get(0));
 
         return (tabPersos.get(1));
     }
@@ -95,7 +95,6 @@ public class CombatController {
         tabInfoCombat.put("armeAttaquant", p2.getArmeEquiper().getNom());
         tabInfoCombat.put("pvAttaquant", Integer.toString(Math.round(p1.getPvCourant())));
         tabInfoCombat.put("pvDefenseur", Integer.toString(Math.round(p2.getPvCourant())));
-       
 
         float[] tabInfoDegat = p1.attaque(p2); //attaque
 
@@ -121,34 +120,36 @@ public class CombatController {
         //remettre les pv;
         this.p1.setPvCourant(this.p1.getPv());
         this.p2.setPvCourant(this.p2.getPv());
-        
-        
+
+        Map<String, String> tabInfoCombat = new HashMap<>();
+        tabInfoCombat.put("niveauOriginal", Integer.toString(gagnant.getNiveau()));
+
         double progression = gagnant.getProgression();
         double xpToLevelUp = gagnant.getXpToLevelUp();
         double xpGagnee = perdant.getXpDonnee(); //XP donnée par le eprdant au gagnant = 10*niveau
-        
-        if(progression+xpGagnee > xpToLevelUp ){ //si le gain d'xp fait monter de niveau
-            gagnant.setNiveau(gagnant.getNiveau()+1);
+
+        if (progression + xpGagnee > xpToLevelUp) { //si le gain d'xp fait monter de niveau          
+
+            gagnant.setNiveau(gagnant.getNiveau() + 1);
             gagnant.appliqueModifClasse(); //application des modificateurs de classe au level up          
-            
-            xpGagnee -= gagnant.getXpToLevelUp()-gagnant.getProgression();
+
+            xpGagnee -= gagnant.getXpToLevelUp() - gagnant.getProgression();
             gagnant.setProgression(0); //mise a 0 de la progression
-            
-            while(xpGagnee > gagnant.getXpToLevelUp()){ //on traite le cas ou le personnage peut gagner plusieurs niveaux en un seul combat
-                gagnant.setNiveau(gagnant.getNiveau()+1);
+
+            while (xpGagnee > gagnant.getXpToLevelUp()) { //on traite le cas ou le personnage peut gagner plusieurs niveaux en un seul combat
+                gagnant.setNiveau(gagnant.getNiveau() + 1);
                 xpGagnee -= gagnant.getXpToLevelUp();
                 gagnant.appliqueModifClasse(); //application des modificateurs de classe au level up              
             }
-            
+
             gagnant.setProgression(xpGagnee); //on enlève l'Xp ayant servie a lvl up et on ajoute ce qui reste a la progression en cours
-            
-            
-            
-            
-        }else{ //pas monté de niv
-            gagnant.setProgression(gagnant.getProgression()+xpGagnee);
-        }        
-        
+
+        } else { //pas monté de niv
+            gagnant.setProgression(gagnant.getProgression() + xpGagnee);
+        }
+        tabInfoCombat.put("niveauActuel", Integer.toString(gagnant.getNiveau()));
+        this.vueCombat.afficherMonteeNiveau(tabInfoCombat);
+
     }
 
     private Personnage p1;

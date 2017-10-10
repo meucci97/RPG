@@ -44,8 +44,13 @@ public class CombatView {
         System.out.println("");
         System.out.println(tabInfoCombat.get("nomPerdant")+ " meurt!" );
         System.out.println("La manche est remportée par " + tabInfoCombat.get("nomGagnant")+ "!" );
-        System.out.println("______________________________________________________________________________________________________________________");
+        
 
+    }
+    
+    public void afficherMonteeNiveau(Map<String, String> tabInfoCombat){
+        System.out.println("Niveau "+ tabInfoCombat.get("niveauOriginal") + " => Niveau "+ tabInfoCombat.get("niveauActuel"));
+        System.out.println("______________________________________________________________________________________________________________________");
     }
 
 }
