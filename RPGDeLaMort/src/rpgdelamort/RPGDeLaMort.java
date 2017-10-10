@@ -35,16 +35,16 @@ public class RPGDeLaMort {
                         + " force: " + rs.getFloat("forcePersonnage"));
                 System.out.println("L'arme de " + rs.getString("nomPersonnage") + " est: ");
                 System.out.println("ID Arme: " + rs.getString("idArme") + " nomArme: " + rs.getString("nomArme") + " Impacte vitesse: " + rs.getFloat("impactVitesseArme")
-                        + " niveauMinArme: " + rs.getInt("niveauMinArme") + " Attaque Max: " + rs.getFloat("attaqueMaxArme") + " Attaque min: " + rs.getFloat("attaqueMinArme")
+                        + " Attaque Max: " + rs.getFloat("attaqueMaxArme") + " Attaque min: " + rs.getFloat("attaqueMinArme")
                         + " Chance crit Arme: " + rs.getFloat("chanceCritArme") + " degaCritArme: " + rs.getFloat("degaCritArme"));
 
                 System.out.println("L'armure de " + rs.getString("nomPersonnage") + " est: ");
                 System.out.println("ID Armure: " + rs.getInt("idArmure") + " nomArmure: " + rs.getString("nomArmure") + " Impacte vitesse: " + rs.getFloat("impactVitesseArmure")
-                        + " niveauMinArmure: " + rs.getInt("niveauMinArmure") + " defenseArmure: " + rs.getFloat("defenseArmure"));
+                        + " defenseArmure: " + rs.getFloat("defenseArmure"));
                 System.out.println("La classe de " + rs.getString("nomPersonnage") + " est: ");
-                System.out.println("ID Classe "+rs.getInt("idClasse")+ " nomClasse: "+ rs.getString("nomClasse")+ " multiplicateurPVClasse: "+rs.getFloat("multiplicateurPVClasse")
-                        + " multiplicateurVitesseClasse: "+rs.getFloat("multiplicateurVitesseClasse")+ " multiplicateurAttaqueClasse: "+rs.getFloat("multiplicateurAttaqueClasse")+
-                         " multiplicateurDefenseClasse: "+rs.getFloat("multiplicateurDefenseClasse"));
+                System.out.println("ID Classe " + rs.getInt("idClasse") + " nomClasse: " + rs.getString("nomClasse") + " multiplicateurPVClasse: " + rs.getFloat("multiplicateurPVClasse")
+                        + " multiplicateurVitesseClasse: " + rs.getFloat("multiplicateurVitesseClasse") + " multiplicateurAttaqueClasse: " + rs.getFloat("multiplicateurAttaqueClasse")
+                        + " multiplicateurDefenseClasse: " + rs.getFloat("multiplicateurDefenseClasse"));
             }
 
         } catch (Exception ex) {
@@ -56,6 +56,7 @@ public class RPGDeLaMort {
 
         jeu.lanceTournoi();
          MaFenetre F1=new MaFenetre();
+
         F1.setVisible(true);
     }
 

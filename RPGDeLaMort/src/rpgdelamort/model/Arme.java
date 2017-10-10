@@ -6,16 +6,16 @@ public class Arme extends Equipement {
         super();
         this.setNom(nom);
         this.setImpactVitesse(1f);
-        this.setNiveauMin(1);
         this.setAttaqueMin(1f);
         this.setAttaqueMax(10f);
         this.setChanceCrit(0.5f);
         this.setDegatCrit(2f);
     }
+    
+
 
     public Arme(String nom,
             float impactVitesse,
-            int niveauMin, 
             float attaqueMax,
             float attaqueMin,
             float chanceCrit, 
@@ -24,7 +24,14 @@ public class Arme extends Equipement {
         super();
         this.setNom(nom);
         this.setImpactVitesse(impactVitesse);
-        this.setNiveauMin(niveauMin);
+        this.attaqueMax = attaqueMax;
+        this.attaqueMin = attaqueMin;
+        this.chanceCrit = chanceCrit;
+        this.degatCrit = degatCrit;
+    }
+
+    public Arme(int id, String nom, float impactVitesse, float attaqueMin, float attaqueMax, float chanceCrit, float degatCrit ) {
+        super(id, nom, impactVitesse);
         this.attaqueMax = attaqueMax;
         this.attaqueMin = attaqueMin;
         this.chanceCrit = chanceCrit;

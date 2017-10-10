@@ -30,6 +30,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -43,7 +44,7 @@ import static rpgdelamort.view.GetComboItem.getListPersonnage;
  *
  * @author Stefano
  */
-public class SelectionnerPersonnageView extends JPanel implements ActionListener{
+public class SelectionnerPersonnageView extends JPanel implements ActionListener {
 
     private JFrame fenetre;
     private JLabel nomPartie;
@@ -60,6 +61,7 @@ public class SelectionnerPersonnageView extends JPanel implements ActionListener
     private String joueur1Select;
     private String joueur2Select;
     private String[] idJoueur;
+
     public SelectionnerPersonnageView(JFrame fenetre) {
         Font font = new Font("SF Slapstick Comic Shaded", Font.BOLD, 20);
         this.setPreferredSize(new Dimension(600, 400));
@@ -132,10 +134,10 @@ public class SelectionnerPersonnageView extends JPanel implements ActionListener
         troisManche.setForeground(new Color(255, 140, 0));
         troisManche.setFocusable(false);
         manche = new ButtonGroup();
-        
+
         manche.add(uneManche);
         manche.add(troisManche);
-
+        uneManche.setSelected(true);
         valider.addActionListener(this);
         annuler.addActionListener(this);
         initialisation();
@@ -147,7 +149,7 @@ public class SelectionnerPersonnageView extends JPanel implements ActionListener
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints cont = new GridBagConstraints();
-        
+
         cont.fill = GridBagConstraints.BOTH;
         cont.gridx = 0;
         cont.gridy = 0;
@@ -188,7 +190,7 @@ public class SelectionnerPersonnageView extends JPanel implements ActionListener
         cont.gridx = 0;
         cont.gridy = 6;
         cont.fill = GridBagConstraints.CENTER;
-        
+
         this.add(valider, cont);
         cont.gridx = 2;
         cont.gridy = 6;
@@ -200,59 +202,60 @@ public class SelectionnerPersonnageView extends JPanel implements ActionListener
 
     }
 
-   
-
     @Override
     public void actionPerformed(ActionEvent e) {
-          if (e.getSource() == annuler) {
-            Menu menu=new Menu(fenetre);
+        if (e.getSource() == annuler) {
+            Menu menu = new Menu(fenetre);
             fenetre.setContentPane(menu);
             fenetre.pack();
-        }else if( e.getSource()==valider){
+        } else if (e.getSource() == valider) {
             Personnage p1, p2;
-            Arme a1,a2;
-            Armure ar1,ar2;
+            Arme a1, a2;
+            Armure ar1, ar2;
             Classe cl1, cl2;
-            
-              
-              try {
-            SqliteConnection maBase = new SqliteConnection("rpg");
-             joueur1Select= (String)joueur1.getSelectedItem();
-             joueur2Select= (String)joueur2.getSelectedItem();
-             idJoueur=joueur1Select.split("-");
-             System.out.println(idJoueur[0]);
-             
-            ResultSet rs = maBase.getInstance().createStatement().executeQuery("SELECT * FROM Personnage INNER JOIN Arme ON idArmePersonnage=idArme "
-                    + "INNER JOIN Armure ON idArmurePersonnage=idArmure INNER JOIN Classe ON idClassePersonnage=idClasse Where idPersonnage="+idJoueur[0] );
-            rs.next();
-                          System.out.println();
-                System.out.println("id: " + rs.getInt("idPersonnage") + " nom: " + rs.getString("nomPersonnage") + " pv: " + rs.getFloat("pvPersonnage")
-                        + " niveau: " + rs.getString("niveauPersonnage") + " progression: " + rs.getDouble("progressionPersonnage")
-                        + " vitesse: " + rs.getFloat("vitessePersonnage") + " defense: " + rs.getFloat("defensePersonnage")
-                        + " force: " + rs.getFloat("forcePersonnage"));
-                System.out.println("L'arme de " + rs.getString("nomPersonnage") + " est: ");
-                System.out.println("ID Arme: " + rs.getString("idArme") + " nomArme: " + rs.getString("nomArme") + " Impacte vitesse: " + rs.getFloat("impactVitesseArme")
-                        + " niveauMinArme: " + rs.getInt("niveauMinArme") + " Attaque Max: " + rs.getFloat("attaqueMaxArme") + " Attaque min: " + rs.getFloat("attaqueMinArme")
-                        + " Chance crit Arme: " + rs.getFloat("chanceCritArme") + " degaCritArme: " + rs.getFloat("degaCritArme"));
+            int nbManche;
+            if (uneManche.isSelected()) {
+                nbManche = 1;
+            } else {
+                nbManche = 3;
+            }
+            try {
+                SqliteConnection maBase = new SqliteConnection("rpg");
+                joueur1Select = (String) joueur1.getSelectedItem();
+                joueur2Select = (String) joueur2.getSelectedItem();
+                idJoueur = joueur1Select.split("-");
 
-                System.out.println("L'armure de " + rs.getString("nomPersonnage") + " est: ");
-                System.out.println("ID Armure: " + rs.getInt("idArmure") + " nomArmure: " + rs.getString("nomArmure") + " Impacte vitesse: " + rs.getFloat("impactVitesseArmure")
-                        + " niveauMinArmure: " + rs.getInt("niveauMinArmure") + " defenseArmure: " + rs.getFloat("defenseArmure"));
-                System.out.println("La classe de " + rs.getString("nomPersonnage") + " est: ");
-                System.out.println("ID Classe "+rs.getInt("idClasse")+ " nomClasse: "+ rs.getString("nomClasse")+ " multiplicateurPVClasse: "+rs.getFloat("multiplicateurPVClasse")
-                        + " multiplicateurVitesseClasse: "+rs.getFloat("multiplicateurVitesseClasse")+ " multiplicateurAttaqueClasse: "+rs.getFloat("multiplicateurAttaqueClasse")+
-                         " multiplicateurDefenseClasse: "+rs.getFloat("multiplicateurDefenseClasse"));
-            idJoueur=joueur2Select.split("-");
-             System.out.println(idJoueur[0]);
-            rs.close();
+                ResultSet rs = maBase.getInstance().createStatement().executeQuery("SELECT * FROM Personnage INNER JOIN Arme ON idArmePersonnage=idArme "
+                        + "INNER JOIN Armure ON idArmurePersonnage=idArmure INNER JOIN Classe ON idClassePersonnage=idClasse Where idPersonnage=" + idJoueur[0]);
+                rs.next();
+                a1 = new Arme(rs.getInt("idArme"), rs.getString("nomArme"), rs.getFloat("impactVitesseArme"), rs.getFloat("attaqueMinArme"), rs.getFloat("attaqueMaxArme"), rs.getFloat("chanceCritArme"), rs.getFloat("degaCritArme"));
+                ArrayList<Arme> tabArme = new ArrayList<>();
+                tabArme.add(a1);
+                ar1 = new Armure(rs.getInt("idArmure"), rs.getString("nomArme"), rs.getFloat("impactVitesseArme"), rs.getFloat("defenseArmure"));
+                cl1 = new Classe(rs.getInt("idClasse"), rs.getString("nomClasse"), rs.getFloat("multiplicateurPVClasse"), rs.getFloat("multiplicateurVitesseClasse"), rs.getFloat("multiplicateurAttaqueClasse"), rs.getFloat("multiplicateurDefenseClasse"));
+                p1 = new Personnage(rs.getInt("idPersonnage"), rs.getString("nomPersonnage"), rs.getFloat("pvPersonnage"), rs.getInt("niveauPersonnage"), rs.getDouble("progressionPersonnage"), rs.getFloat("vitessePersonnage"), rs.getFloat("defensePersonnage"), rs.getFloat("forcePersonnage"), tabArme, ar1, cl1);
+                idJoueur = joueur2Select.split("-");
+                rs = maBase.getInstance().createStatement().executeQuery("SELECT * FROM Personnage INNER JOIN Arme ON idArmePersonnage=idArme "
+                        + "INNER JOIN Armure ON idArmurePersonnage=idArmure INNER JOIN Classe ON idClassePersonnage=idClasse Where idPersonnage=" + idJoueur[0]);
 
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+                rs.next();
+                a2 = new Arme(rs.getInt("idArme"), rs.getString("nomArme"), rs.getFloat("impactVitesseArme"), rs.getFloat("attaqueMinArme"), rs.getFloat("attaqueMaxArme"), rs.getFloat("chanceCritArme"), rs.getFloat("degaCritArme"));
+                tabArme = new ArrayList<>();
+                tabArme.add(a2);
+                ar2 = new Armure(rs.getInt("idArmure"), rs.getString("nomArme"), rs.getFloat("impactVitesseArme"), rs.getFloat("defenseArmure"));
+                cl2 = new Classe(rs.getInt("idClasse"), rs.getString("nomClasse"), rs.getFloat("multiplicateurPVClasse"), rs.getFloat("multiplicateurVitesseClasse"), rs.getFloat("multiplicateurAttaqueClasse"), rs.getFloat("multiplicateurDefenseClasse"));
+                p2 = new Personnage(rs.getInt("idPersonnage"), rs.getString("nomPersonnage"), rs.getFloat("pvPersonnage"), rs.getInt("niveauPersonnage"), rs.getDouble("progressionPersonnage"), rs.getFloat("vitessePersonnage"), rs.getFloat("defensePersonnage"), rs.getFloat("forcePersonnage"), tabArme, ar2, cl2);
+                rs.close();
+                JOptionPane.showMessageDialog(fenetre, "Veuillez regarder la console pour le deroulement du combat");
+                Menu menu = new Menu(fenetre);
+                fenetre.setContentPane(menu);
+                fenetre.pack();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+
         }
 
-           
-        }
-          
     }
 
     @Override
@@ -262,10 +265,8 @@ public class SelectionnerPersonnageView extends JPanel implements ActionListener
             Image img = ImageIO.read(new File("background2.jpg"));
             g.drawImage(img, 0, 0, null);
         } catch (IOException ex) {
-            // Logger.getLogger(vuePartie.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-    
-   
+
 }

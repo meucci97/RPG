@@ -5,6 +5,7 @@
  */
 package rpgdelamort.view;
 
+import Singleton.SqliteConnection;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -16,6 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -23,7 +26,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import rpgdelamort.model.Arme;
+import rpgdelamort.model.Armure;
+import rpgdelamort.model.Classe;
+import rpgdelamort.model.Personnage;
 
 /**
  *
@@ -96,19 +104,56 @@ public class Menu extends JPanel implements ActionListener {
 
     }
 
+    public void lancerTournoi() {
+        int i=0;
+         ArrayList<Personnage> tabPersonnage;
+         tabPersonnage = new ArrayList();
+        try{
+        SqliteConnection maBase = new SqliteConnection("rpg");
+        
+        Arme a1;
+        Armure ar1;
+        Classe cl1;
+        
+        ArrayList<Arme> tabArme = new ArrayList<>();
+        ResultSet rs = maBase.getInstance().createStatement().executeQuery("SELECT * FROM Personnage INNER JOIN Arme ON idArmePersonnage=idArme "
+                + "INNER JOIN Armure ON idArmurePersonnage=idArmure INNER JOIN Classe ON idClassePersonnage=idClasse");
+            while (rs.next()) {
+                a1 = new Arme(rs.getInt("idArme"), rs.getString("nomArme"), rs.getFloat("impactVitesseArme"), rs.getFloat("attaqueMinArme"), rs.getFloat("attaqueMaxArme"), rs.getFloat("chanceCritArme"), rs.getFloat("degaCritArme"));
+                tabArme.add(a1);
+                ar1 = new Armure(rs.getInt("idArmure"), rs.getString("nomArme"), rs.getFloat("impactVitesseArme"), rs.getFloat("defenseArmure"));
+                cl1 = new Classe(rs.getInt("idClasse"), rs.getString("nomClasse"), rs.getFloat("multiplicateurPVClasse"), rs.getFloat("multiplicateurVitesseClasse"), rs.getFloat("multiplicateurAttaqueClasse"), rs.getFloat("multiplicateurDefenseClasse"));
+                tabPersonnage.add(new Personnage(rs.getInt("idPersonnage"), rs.getString("nomPersonnage"), rs.getFloat("pvPersonnage"), rs.getInt("niveauPersonnage"), rs.getDouble("progressionPersonnage"), rs.getFloat("vitessePersonnage"), rs.getFloat("defensePersonnage"), rs.getFloat("forcePersonnage"), tabArme, ar1, cl1) );
+                tabArme.clear();
+                i++;
+            }
+            rs.close();
+        }catch(Exception e){
+            
+        }
+       if(i==0){
+            JOptionPane.showMessageDialog(fenetre,
+                            "Veuillez ajouter des personnages dans la base de données",
+                            "Erreur nombre de personnage",
+                            JOptionPane.ERROR_MESSAGE);
+       }else{
+           JOptionPane.showMessageDialog(fenetre, "Veuillez regarder la console pour le deroulement du combat");
+       }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == start) {
-            SelectionnerPersonnageView selectionnerPerso=new SelectionnerPersonnageView(fenetre);
+            SelectionnerPersonnageView selectionnerPerso = new SelectionnerPersonnageView(fenetre);
             fenetre.setContentPane(selectionnerPerso);
             fenetre.pack();
         } else if (e.getSource() == tournoi) {
-
+            lancerTournoi();
         } else if (e.getSource() == edition) {
-            ModeEditionView modeEdition= new ModeEditionView(fenetre);
-             fenetre.setContentPane(modeEdition);
+            ModeEditionView modeEdition = new ModeEditionView(fenetre);
+            fenetre.setContentPane(modeEdition);
             fenetre.pack();
-        } 
+        }
     }
 
     @Override

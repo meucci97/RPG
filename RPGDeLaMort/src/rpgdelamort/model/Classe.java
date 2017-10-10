@@ -9,6 +9,15 @@ public class Classe {
         this.setMultiplicateurDefense(1.05f);
         this.setMultiplicateurPV(1.2f);        
     }
+
+    public Classe(int id, String nom, float multiplicateurPV, float multiplicateurVitesse, float multiplicateurAttaque, float multiplicateurDefense) {
+        this.id = id;
+        this.nom = nom;
+        this.multiplicateurPV = multiplicateurPV;
+        this.multiplicateurVitesse = multiplicateurVitesse;
+        this.multiplicateurAttaque = multiplicateurAttaque;
+        this.multiplicateurDefense = multiplicateurDefense;
+    }
     
     public Classe(String nom,
             float multiplicateurVitesse,
