@@ -724,7 +724,7 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener {
             String sql = "UPDATE  Personnage set nomPersonnage='" + nomPersonnage + "',pvPersonnage=" + pvPersonnage + ",vitessePersonnage=" + vitessePersonnage + ",forcePersonnage=" + forcePerso + ",defensePersonnage=" + defensePerso + ","
                     + "idClassePersonnage=" + classePerso + ",idArmePersonnage=" + armePerso + ",idArmurePersonnage=" + armurePerso + " where idPersonnage=" + idPersonnage + ";";
 
-            //System.out.println(sql);
+            System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
 
