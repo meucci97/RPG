@@ -164,8 +164,8 @@ public class CombatController {
             String sql = "UPDATE  Personnage set nomPersonnage='" + nomPersonnage + "',pvPersonnage=" + pvPersonnage + ",vitessePersonnage=" + vitessePersonnage + ",forcePersonnage=" + forcePerso + ",defensePersonnage=" + defensePerso + ","
                      +" progressionPersonnage="+progressionPersonnage+", niveauPersonnage="+niveau+" where idPersonnage=" + idPersonnage + ";";
 
-            System.out.println(sql);
-            System.out.println(stmt);
+            //System.out.println(sql);
+            //System.out.println(stmt);
             stmt.executeUpdate(sql);
             stmt.closeOnCompletion();
 

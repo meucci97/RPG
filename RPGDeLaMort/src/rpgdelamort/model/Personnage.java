@@ -80,7 +80,7 @@ public class Personnage extends Entite {
     }
     
     public boolean isAlive(){
-        return this.getPvCourant()> 0f;
+        return this.getPvCourant()> 1f;//pour eviter les affichage 0pv
     }
     
     public void appliqueModifClasse(){//quand le perso levelUp
