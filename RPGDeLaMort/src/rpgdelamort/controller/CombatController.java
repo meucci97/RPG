@@ -144,7 +144,7 @@ public class CombatController {
                 xpGagnee -= gagnant.getXpToLevelUp();
                 gagnant.appliqueModifClasse(); //application des modificateurs de classe au level up              
             }
-
+            System.out.println(xpGagnee);
             gagnant.setProgression(xpGagnee); //on enlève l'Xp ayant servie a lvl up et on ajoute ce qui reste a la progression en cours
             updatePersonnage(Integer.toString(gagnant.getId()), gagnant.getNom(), gagnant.getPv(), gagnant.getVitesse(), gagnant.getForce(), gagnant.getDefense(), gagnant.getProgression(), gagnant.getNiveau(), Integer.toString(gagnant.getClasse().getId()), Integer.toString(gagnant.getArmeEquiper().getId()), Integer.toString(gagnant.getClasse().getId())); //stefano je te déteste
         } else { //pas monté de niv
@@ -164,8 +164,8 @@ public class CombatController {
             String sql = "UPDATE  Personnage set nomPersonnage='" + nomPersonnage + "',pvPersonnage=" + pvPersonnage + ",vitessePersonnage=" + vitessePersonnage + ",forcePersonnage=" + forcePerso + ",defensePersonnage=" + defensePerso + ","
                      +" progressionPersonnage="+progressionPersonnage+", niveauPersonnage="+niveau+" where idPersonnage=" + idPersonnage + ";";
 
-            System.out.println(sql);
-            System.out.println(stmt);
+            //System.out.println(sql);
+            //System.out.println(stmt);
             stmt.executeUpdate(sql);
             stmt.closeOnCompletion();
 
