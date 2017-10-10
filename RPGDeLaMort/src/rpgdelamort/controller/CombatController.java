@@ -144,7 +144,7 @@ public class CombatController {
                 xpGagnee -= gagnant.getXpToLevelUp();
                 gagnant.appliqueModifClasse(); //application des modificateurs de classe au level up              
             }
-
+            System.out.println(xpGagnee);
             gagnant.setProgression(xpGagnee); //on enlève l'Xp ayant servie a lvl up et on ajoute ce qui reste a la progression en cours
             updatePersonnage(Integer.toString(gagnant.getId()), gagnant.getNom(), gagnant.getPv(), gagnant.getVitesse(), gagnant.getForce(), gagnant.getDefense(),gagnant.getProgression(), gagnant.getNiveau(), Integer.toString(gagnant.getClasse().getId()), Integer.toString(gagnant.getArmeEquiper().getId()), Integer.toString(gagnant.getClasse().getId())); //stefano je te déteste
         } else { //pas monté de niv
