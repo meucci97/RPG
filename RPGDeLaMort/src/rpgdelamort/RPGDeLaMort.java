@@ -54,7 +54,7 @@ public class RPGDeLaMort {
 
         JeuController jeu = new JeuController();
 
-        jeu.combat();
+        jeu.lanceTournoi();
          MaFenetre F1=new MaFenetre();
         F1.setVisible(true);
     }

@@ -86,7 +86,7 @@ public class Personnage extends Entite {
     public void appliqueModifClasse(){//quand le perso levelUp
         this.force = this.force * this.getClasse().getMultiplicateurAttaque();
         this.pv *= this.getClasse().getMultiplicateurPV();
-        this.pvCourant *= this.pv; //remise a niveau des pvCourant après modiification des pv max
+        this.pvCourant = this.pv; //remise a niveau des pvCourant après modiification des pv max
         this.defense *= this.getClasse().getMultiplicateurDefense();
         this.vitesse *= this.getClasse().getMultiplicateurVitesse();
     }

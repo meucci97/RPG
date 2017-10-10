@@ -16,6 +16,12 @@ import rpgdelamort.view.CombatView;
  * @author p1711638
  */
 public class CombatController {
+    
+    public CombatController(){
+        this.p1 = null;
+        this.p2 = null;
+        this.vueCombat = new CombatView();
+    }
 
     public CombatController(Personnage p1, Personnage p2) {
         this.p1 = p1;
