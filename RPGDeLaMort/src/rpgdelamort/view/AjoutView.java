@@ -21,6 +21,7 @@ import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import static rpgdelamort.view.GetComboItem.getListArme;
 import static rpgdelamort.view.GetComboItem.getListArmure;
 
@@ -261,6 +262,42 @@ public class AjoutView extends javax.swing.JPanel implements ActionListener {
         jTabbedPane1.addTab("Armure", jPanel3);
 
         btnAnnuler.setText("Annuler");
+
+        btnValiderArme.setFocusable(false);
+        btnValiderArme.setPreferredSize(new Dimension(400, 50));
+        btnValiderArme.setFont(font);
+        btnValiderArme.setForeground(new Color(255, 140, 0));
+        btnValiderArme.setContentAreaFilled(false);
+        btnValiderArme.setBorder(null);
+        btnValiderArme.setBackground(new Color(255, 0, 255, 0));
+        btnValiderArme.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+
+        btnValiderPersonnage.setFocusable(false);
+        btnValiderPersonnage.setPreferredSize(new Dimension(400, 50));
+        btnValiderPersonnage.setFont(font);
+        btnValiderPersonnage.setForeground(new Color(255, 140, 0));
+        btnValiderPersonnage.setContentAreaFilled(false);
+        btnValiderPersonnage.setBorder(null);
+        btnValiderPersonnage.setBackground(new Color(255, 0, 255, 0));
+        btnValiderPersonnage.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+
+        btnValiderArmure.setFocusable(false);
+        btnValiderArmure.setPreferredSize(new Dimension(400, 50));
+        btnValiderArmure.setFont(font);
+        btnValiderArmure.setForeground(new Color(255, 140, 0));
+        btnValiderArmure.setContentAreaFilled(false);
+        btnValiderArmure.setBorder(null);
+        btnValiderArmure.setBackground(new Color(255, 0, 255, 0));
+        btnValiderArmure.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+
+        btnAnnuler.setFocusable(false);
+        btnAnnuler.setPreferredSize(new Dimension(400, 50));
+        btnAnnuler.setFont(font);
+        btnAnnuler.setForeground(new Color(255, 140, 0));
+        btnAnnuler.setContentAreaFilled(false);
+        btnAnnuler.setBorder(null);
+        btnAnnuler.setBackground(new Color(255, 0, 255, 0));
+        btnAnnuler.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
 
         btnValiderArme.addActionListener(this);
         btnValiderPersonnage.addActionListener(this);
@@ -532,15 +569,17 @@ public class AjoutView extends javax.swing.JPanel implements ActionListener {
             String sql = "INSERT INTO Personnage(nomPersonnage,pvPersonnage,vitessePersonnage,forcePersonnage,defensePersonnage,niveauPersonnage, "
                     + "idClassePersonnage,idArmePersonnage,idArmurePersonnage) VALUES('" + nomPersonnage + "'," + pvPersonnage + "," + vitessePersonnage + "," + forcePerso + "," + defensePerso + "," + niveau + "," + classePerso
                     + "," + armePerso + "," + armurePerso + ");";
-            System.out.println(sql);
+            //System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
 
-            System.out.println("ok");
+            JOptionPane.showMessageDialog(fenetre,
+                    "La modification a été réalisée avec succès");
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-
+            JOptionPane.showMessageDialog(fenetre,
+                    "Problème rencontrer avec la base de données");
             return false;
         }
     }
@@ -556,12 +595,13 @@ public class AjoutView extends javax.swing.JPanel implements ActionListener {
             System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
-
-            System.out.println("ok");
+            JOptionPane.showMessageDialog(fenetre,
+                    "La modification a été réalisée avec succès");
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-
+            JOptionPane.showMessageDialog(fenetre,
+                    "Problème rencontrer avec la base de données");
             return false;
         }
     }
@@ -574,15 +614,16 @@ public class AjoutView extends javax.swing.JPanel implements ActionListener {
             String sql = "INSERT INTO Armure(nomArmure, impactVitesseArmure, defenseArmure"
                     + ") VALUES('" + nomArmure + "'," + impactVitesseArmure + "," + defenseArmure
                     + ");";
-            System.out.println(sql);
+            //  System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
-
-            System.out.println("ok");
+            JOptionPane.showMessageDialog(fenetre,
+                    "La modification a été réalisée avec succès");
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-
+            JOptionPane.showMessageDialog(fenetre,
+                    "Problème rencontrer avec la base de données");
             return false;
         }
     }
@@ -596,7 +637,10 @@ public class AjoutView extends javax.swing.JPanel implements ActionListener {
         } else if (e.getSource() == btnValiderPersonnage) {
             if (txtNomPersonnage.getText().isEmpty() || txtPVPersonnage.getText().isEmpty() || txtVitessePersonnage.getText().isEmpty()
                     || txtForcePersonnage.getText().isEmpty() || txtDefensePersonnage.getText().isEmpty() || txtNiveauPersonnage.getText().isEmpty()) {
-                System.out.println("False");
+                JOptionPane.showMessageDialog(fenetre,
+                        "Veulliez bien remplir toutes les cellules",
+                        "Erreur cellules vide",
+                        JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
                     float pvPerso, vitessePerso, forcePerso, defensePerso;
@@ -617,14 +661,15 @@ public class AjoutView extends javax.swing.JPanel implements ActionListener {
                     idArme = traitement[0];
                     traitement = idArmure.split("-");
                     idArmure = traitement[0];
-                    System.out.println(niveau);
-                    System.out.println("true");
                     insertPersonnage(txtNomPersonnage.getText(), pvPerso, vitessePerso, forcePerso, defensePerso, niveau, idClasse, idArme, idArmure);
                     Menu menu = new Menu(fenetre);
                     fenetre.setContentPane(menu);
                     fenetre.pack();
                 } catch (NumberFormatException ne) {
-                    System.out.println("false");
+                    JOptionPane.showMessageDialog(fenetre,
+                            "Le formats d'une cellule ou plusieurs cellules est incorrect",
+                            "Erreur Formatge de données",
+                            JOptionPane.ERROR_MESSAGE);
 
                 }
 
@@ -633,7 +678,10 @@ public class AjoutView extends javax.swing.JPanel implements ActionListener {
         } else if (e.getSource() == btnValiderArme) {
             if (txtNomArme.getText().isEmpty() || txtImpactVitesseArme.getText().isEmpty() || txtAttaqueMinArme.getText().isEmpty()
                     || txtAttaqueMaxArme.getText().isEmpty() || txtChanceCritArme.getText().isEmpty() || txtDegatCritArme.getText().isEmpty()) {
-                System.out.println("False");
+                JOptionPane.showMessageDialog(fenetre,
+                        "Veulliez bien remplir toutes les cellules",
+                        "Erreur cellules vide",
+                        JOptionPane.ERROR_MESSAGE);
 
             } else {
                 try {
@@ -648,15 +696,19 @@ public class AjoutView extends javax.swing.JPanel implements ActionListener {
                     fenetre.setContentPane(menu);
                     fenetre.pack();
                 } catch (NumberFormatException ne) {
-
+                    JOptionPane.showMessageDialog(fenetre,
+                            "Le formats d'une cellule ou plusieurs cellules est incorrect",
+                            "Erreur Formatge de données",
+                            JOptionPane.ERROR_MESSAGE);
                 }
 
-                System.out.println("true");
             }
         } else if (e.getSource() == btnValiderArmure) {
             if (txtNomArmure.getText().isEmpty() || txtImpactVitesseArmure.getText().isEmpty() || txtDefense.getText().isEmpty()) {
-                System.out.println("False");
-
+                JOptionPane.showMessageDialog(fenetre,
+                        "Veulliez bien remplir toutes les cellules",
+                        "Erreur cellules vide",
+                        JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
                     String nomArmure = txtNomArmure.getText();
@@ -667,12 +719,13 @@ public class AjoutView extends javax.swing.JPanel implements ActionListener {
                     fenetre.setContentPane(menu);
                     fenetre.pack();
                 } catch (NumberFormatException ne) {
-
+                    JOptionPane.showMessageDialog(fenetre,
+                            "Le formats d'une cellule ou plusieurs cellules est incorrect",
+                            "Erreur Formatge de données",
+                            JOptionPane.ERROR_MESSAGE);
                 }
-                System.out.println("true");
 
             }
         }
     }
-
 }

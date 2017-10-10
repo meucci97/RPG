@@ -20,6 +20,7 @@ import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -43,6 +44,7 @@ public class SuppressionView extends javax.swing.JPanel implements ActionListene
     public SuppressionView(JFrame fenetre) {
         this.fenetre = fenetre;
         Font font = new Font("SF Slapstick Comic Shaded", Font.BOLD, 20);
+        Font font2 = new Font("SF Slapstick Comic Shaded", Font.BOLD, 15);
         this.setPreferredSize(new Dimension(600, 400));
         this.setBackground(new Color(237, 255, 12));
 
@@ -90,6 +92,42 @@ public class SuppressionView extends javax.swing.JPanel implements ActionListene
         jLabel4.setForeground(new Color(255, 140, 0));
         jLabel4.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 
+        btnSuppPerso.setFocusable(false);
+        btnSuppPerso.setPreferredSize(new Dimension(400, 50));
+        btnSuppPerso.setFont(font2);
+        btnSuppPerso.setForeground(new Color(255, 140, 0));
+        btnSuppPerso.setContentAreaFilled(false);
+        btnSuppPerso.setBorder(null);
+        btnSuppPerso.setBackground(new Color(255, 0, 255, 0));
+        btnSuppPerso.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+
+        btnSuppArme.setFocusable(false);
+        btnSuppArme.setPreferredSize(new Dimension(400, 50));
+        btnSuppArme.setFont(font2);
+        btnSuppArme.setForeground(new Color(255, 140, 0));
+        btnSuppArme.setContentAreaFilled(false);
+        btnSuppArme.setBorder(null);
+        btnSuppArme.setBackground(new Color(255, 0, 255, 0));
+        btnSuppArme.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+        btnSuppArmure.setFocusable(false);
+        btnSuppArmure.setPreferredSize(new Dimension(400, 50));
+        btnSuppArmure.setFont(font2);
+        btnSuppArmure.setForeground(new Color(255, 140, 0));
+        btnSuppArmure.setContentAreaFilled(false);
+        btnSuppArmure.setBorder(null);
+        btnSuppArmure.setBackground(new Color(255, 0, 255, 0));
+        btnSuppArmure.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+
+        btnAnnuler.setFocusable(false);
+        btnAnnuler.setPreferredSize(new Dimension(400, 50));
+        btnAnnuler.setFont(font);
+        btnAnnuler.setForeground(new Color(255, 140, 0));
+        btnAnnuler.setContentAreaFilled(false);
+        btnAnnuler.setBorder(null);
+        btnAnnuler.setBackground(new Color(255, 0, 255, 0));
+        btnAnnuler.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+
         btnSuppPerso.addActionListener(this);
         btnSuppArme.addActionListener(this);
         btnSuppArmure.addActionListener(this);
@@ -97,8 +135,6 @@ public class SuppressionView extends javax.swing.JPanel implements ActionListene
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jLabel4.setToolTipText("");
@@ -172,7 +208,7 @@ public class SuppressionView extends javax.swing.JPanel implements ActionListene
             Image img = ImageIO.read(new File("background2.jpg"));
             g.drawImage(img, 0, 0, null);
         } catch (IOException ex) {
-            // Logger.getLogger(vuePartie.class.getName()).log(Level.SEVERE, null, ex);
+            // Logger.getLogger(vuePartie.class.getName()).log(Level.SEVERE, null, ex
         }
 
     }
@@ -185,19 +221,21 @@ public class SuppressionView extends javax.swing.JPanel implements ActionListene
                 SqliteConnection maBase = new SqliteConnection("rpg");
                 String idPerso = (String) cbPersonnage.getSelectedItem();
                 String id[] = idPerso.split("-");
-                System.out.println();
                 Statement stmt = maBase.getInstance().createStatement();
                 String sql = "DELETE from Personnage where idPersonnage=" + id[0] + ";";
-                System.out.println(sql);
+                //System.out.println(sql);
                 stmt.executeUpdate(sql);
                 stmt.close();
-                System.out.println("ok");
+                JOptionPane.showMessageDialog(fenetre,
+                        "La suppression a été réalisée avec succès");
                 Menu menu = new Menu(fenetre);
                 fenetre.setContentPane(menu);
                 fenetre.pack();
 
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(fenetre,
+                        "Problème rencontrer avec la base de données");
 
             }
         } else if (e.getSource() == btnSuppArme) {
@@ -205,17 +243,16 @@ public class SuppressionView extends javax.swing.JPanel implements ActionListene
                 SqliteConnection maBase = new SqliteConnection("rpg");
                 String idArme = (String) cbArme.getSelectedItem();
                 String id[] = idArme.split("-");
-                System.out.println();
                 Statement stmt = maBase.getInstance().createStatement();
                 String sql = "UPDATE  Personnage set idArmePersonnage= 1 where idArmePersonnage=" + id[0] + ";";
-                System.out.println(sql);
+                //System.out.println(sql);
                 stmt.executeUpdate(sql);
-                System.out.println("ok");
                 sql = "DELETE from Arme where idArme=" + id[0] + ";";
-                System.out.println(sql);
+                //System.out.println(sql);
                 stmt.executeUpdate(sql);
                 stmt.close();
-                System.out.println("ok");
+                JOptionPane.showMessageDialog(fenetre,
+                        "La suppression a été réalisée avec succès");
                 Menu menu = new Menu(fenetre);
                 fenetre.setContentPane(menu);
                 fenetre.pack();
@@ -223,6 +260,8 @@ public class SuppressionView extends javax.swing.JPanel implements ActionListene
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
 
+                JOptionPane.showMessageDialog(fenetre,
+                        "Problème rencontrer avec la base de données");
             }
 
         } else if (e.getSource() == btnSuppArmure) {
@@ -231,24 +270,24 @@ public class SuppressionView extends javax.swing.JPanel implements ActionListene
                 SqliteConnection maBase = new SqliteConnection("rpg");
                 String idArmure = (String) cbArmure.getSelectedItem();
                 String id[] = idArmure.split("-");
-                System.out.println();
                 Statement stmt = maBase.getInstance().createStatement();
                 String sql = "UPDATE  Personnage set idArmurePersonnage= 1 where idArmurePersonnage=" + id[0] + ";";
-                System.out.println(sql);
+                //System.out.println(sql);
                 stmt.executeUpdate(sql);
-                System.out.println("ok");
                 sql = "DELETE from Armure where idArmure=" + id[0] + ";";
-                System.out.println(sql);
+                //System.out.println(sql);
                 stmt.executeUpdate(sql);
                 stmt.close();
-                System.out.println("ok");
+                JOptionPane.showMessageDialog(fenetre,
+                        "La suppression a été réalisée avec succès");
                 Menu menu = new Menu(fenetre);
                 fenetre.setContentPane(menu);
                 fenetre.pack();
 
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
-
+                JOptionPane.showMessageDialog(fenetre,
+                        "Problème rencontrer avec la base de données");
             }
 
         } else if (e.getSource() == btnAnnuler) {

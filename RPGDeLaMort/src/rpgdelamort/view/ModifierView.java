@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import static rpgdelamort.view.GetComboItem.getListArme;
 import static rpgdelamort.view.GetComboItem.getListArmure;
 
@@ -296,6 +297,42 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener {
         jLabel19.setText("Armure:");
         btnAnnuler.setText("Annuler");
 
+        btnValiderArme.setFocusable(false);
+        btnValiderArme.setPreferredSize(new Dimension(400, 50));
+        btnValiderArme.setFont(font);
+        btnValiderArme.setForeground(new Color(255, 140, 0));
+        btnValiderArme.setContentAreaFilled(false);
+        btnValiderArme.setBorder(null);
+        btnValiderArme.setBackground(new Color(255, 0, 255, 0));
+        btnValiderArme.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+
+        btnValiderPersonnage.setFocusable(false);
+        btnValiderPersonnage.setPreferredSize(new Dimension(400, 50));
+        btnValiderPersonnage.setFont(font);
+        btnValiderPersonnage.setForeground(new Color(255, 140, 0));
+        btnValiderPersonnage.setContentAreaFilled(false);
+        btnValiderPersonnage.setBorder(null);
+        btnValiderPersonnage.setBackground(new Color(255, 0, 255, 0));
+        btnValiderPersonnage.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+        btnValiderArmure.setFocusable(false);
+        btnValiderArmure.setPreferredSize(new Dimension(400, 50));
+        btnValiderArmure.setFont(font);
+        btnValiderArmure.setForeground(new Color(255, 140, 0));
+        btnValiderArmure.setContentAreaFilled(false);
+        btnValiderArmure.setBorder(null);
+        btnValiderArmure.setBackground(new Color(255, 0, 255, 0));
+        btnValiderArmure.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+
+        btnAnnuler.setFocusable(false);
+        btnAnnuler.setPreferredSize(new Dimension(400, 50));
+        btnAnnuler.setFont(font);
+        btnAnnuler.setForeground(new Color(255, 140, 0));
+        btnAnnuler.setContentAreaFilled(false);
+        btnAnnuler.setBorder(null);
+        btnAnnuler.setBackground(new Color(255, 0, 255, 0));
+        btnAnnuler.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+
         btnValiderArme.addActionListener(this);
         btnValiderPersonnage.addActionListener(this);
         btnValiderArmure.addActionListener(this);
@@ -307,11 +344,9 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener {
 
                 } else {
 
-                    System.out.println(e.getItem());
                     String idPerso = (String) e.getItem();
 
                     String id[] = idPerso.split("-");
-                    System.out.println(id[0]);
                     inputPersonnage(id[0]);
 
                 }
@@ -324,11 +359,9 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener {
                 if (e.getStateChange() == e.DESELECTED) {
 
                 } else {
-                    System.out.println(e.getItem());
                     String idArme = (String) e.getItem();
 
                     String id[] = idArme.split("-");
-                    System.out.println(id[0]);
                     inputArme(id[0]);
                 }
 
@@ -340,11 +373,9 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener {
                 if (e.getStateChange() == e.DESELECTED) {
 
                 } else {
-                    System.out.println(e.getItem());
                     String idArmure = (String) e.getItem();
 
                     String id[] = idArmure.split("-");
-                    System.out.println(id[0]);
                     inputArmure(id[0]);
                 }
 
@@ -693,59 +724,63 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener {
             String sql = "UPDATE  Personnage set nomPersonnage='" + nomPersonnage + "',pvPersonnage=" + pvPersonnage + ",vitessePersonnage=" + vitessePersonnage + ",forcePersonnage=" + forcePerso + ",defensePersonnage=" + defensePerso + ","
                     + "idClassePersonnage=" + classePerso + ",idArmePersonnage=" + armePerso + ",idArmurePersonnage=" + armurePerso + " where idPersonnage=" + idPersonnage + ";";
 
-            System.out.println(sql);
+            //System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
 
-            System.out.println("ok");
+            JOptionPane.showMessageDialog(fenetre,
+                    "La modification a été réalisée avec succès");
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-
+            JOptionPane.showMessageDialog(fenetre,
+                    "Problème rencontrer avec la base de données");
             return false;
         }
     }
 
     private boolean updateArme(String idArme, String nomArme, float impactVitesseArme, float attaqueMinArme, float attaqueMaxArme, float chanceCrtiArme, float degatCrit) {
         SqliteConnection maBase = new SqliteConnection("rpg");
-      
+
         try {
             Statement stmt = maBase.getInstance().createStatement();
 
             String sql = "UPDATE  Arme set nomArme='" + nomArme + "',impactVitesseArme=" + impactVitesseArme + ",attaqueMinArme=" + attaqueMinArme + ",attaqueMaxArme=" + attaqueMaxArme + ",chanceCritArme=" + chanceCrtiArme + ","
                     + "degaCritArme=" + degatCrit + " where idArme=" + idArme + ";";
 
-            System.out.println(sql);
+            // System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
-
-            System.out.println("ok");
+            JOptionPane.showMessageDialog(fenetre,
+                    "La modification a été réalisée avec succès");
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-
+            JOptionPane.showMessageDialog(fenetre,
+                    "Problème rencontrer avec la base de données");
             return false;
         }
     }
 
     private boolean updateArumre(String idArmure, String nomArmure, float impactVitesseArmure, float defenseArmure) {
         SqliteConnection maBase = new SqliteConnection("rpg");
-  
+
         try {
             Statement stmt = maBase.getInstance().createStatement();
- 
-                String sql = "UPDATE  Armure set nomArmure='" + nomArmure + "',impactVitesseArmure=" + impactVitesseArmure + ",defenseArmure=" + defenseArmure +
-                  " where idArmure=" + idArmure + ";";
 
-            System.out.println(sql);
+            String sql = "UPDATE  Armure set nomArmure='" + nomArmure + "',impactVitesseArmure=" + impactVitesseArmure + ",defenseArmure=" + defenseArmure
+                    + " where idArmure=" + idArmure + ";";
+
+            // System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
-
-            System.out.println("ok");
+            JOptionPane.showMessageDialog(fenetre,
+                    "La modification a été réalisée avec succès");
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-
+            JOptionPane.showMessageDialog(fenetre,
+                    "Problème rencontrer avec la base de données");
             return false;
         }
     }
@@ -771,7 +806,10 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener {
         } else if (e.getSource() == btnValiderPersonnage) {
             if (txtNomPersonnage.getText().isEmpty() || txtPVPersonnage.getText().isEmpty() || txtVitessePersonnage.getText().isEmpty()
                     || txtForcePersonnage.getText().isEmpty() || txtDefensePersonnage.getText().isEmpty() || txtNiveauPersonnage.getText().isEmpty()) {
-                System.out.println("False");
+                JOptionPane.showMessageDialog(fenetre,
+                        "Veulliez bien remplir toutes les cellules",
+                        "Erreur cellules vide",
+                        JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
                     float pvPerso, vitessePerso, forcePerso, defensePerso;
@@ -792,8 +830,6 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener {
                     idArme = traitement[0];
                     traitement = idArmure.split("-");
                     idArmure = traitement[0];
-                    System.out.println(niveau);
-                    System.out.println("true");
                     String idPerso = (String) cbIDPersonnage.getSelectedItem();
 
                     String id[] = idPerso.split("-");
@@ -802,7 +838,10 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener {
                     fenetre.setContentPane(menu);
                     fenetre.pack();
                 } catch (NumberFormatException ne) {
-                    System.out.println("false");
+                    JOptionPane.showMessageDialog(fenetre,
+                            "Le formats d'une cellule ou plusieurs cellules est incorrect",
+                            "Erreur Formatge de données",
+                            JOptionPane.ERROR_MESSAGE);
 
                 }
 
@@ -811,8 +850,10 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener {
         } else if (e.getSource() == btnValiderArme) {
             if (txtNomArme.getText().isEmpty() || txtImpactVitesseArme.getText().isEmpty() || txtAttaqueMinArme.getText().isEmpty()
                     || txtAttaqueMaxArme.getText().isEmpty() || txtChanceCritArme.getText().isEmpty() || txtDegatCritArme.getText().isEmpty()) {
-                System.out.println("False");
-
+                JOptionPane.showMessageDialog(fenetre,
+                        "Veulliez bien remplir toutes les cellules",
+                        "Erreur cellules vide",
+                        JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
                     String nomArme = txtNomArme.getText();
@@ -823,35 +864,42 @@ public class ModifierView extends javax.swing.JPanel implements ActionListener {
                     float degatCrit = Float.valueOf(txtDegatCritArme.getText());
                     String idArme = (String) cbIDArme.getSelectedItem();
                     String id[] = idArme.split("-");
-                    updateArme(id[0],nomArme, impactVitesseArme, attaqueMinArme, attaqueMaxArme, chanceCrtiArme, degatCrit);
+                    updateArme(id[0], nomArme, impactVitesseArme, attaqueMinArme, attaqueMaxArme, chanceCrtiArme, degatCrit);
                     Menu menu = new Menu(fenetre);
                     fenetre.setContentPane(menu);
                     fenetre.pack();
                 } catch (NumberFormatException ne) {
+                    JOptionPane.showMessageDialog(fenetre,
+                            "Le formats d'une cellule ou plusieurs cellules est incorrect",
+                            "Erreur Formatge de données",
+                            JOptionPane.ERROR_MESSAGE);
 
                 }
-
-                System.out.println("true");
             }
         } else if (e.getSource() == btnValiderArmure) {
             if (txtNomArmure.getText().isEmpty() || txtImpactVitesseArmure.getText().isEmpty() || txtDefense.getText().isEmpty()) {
-                System.out.println("False");
-
+                JOptionPane.showMessageDialog(fenetre,
+                        "Veulliez bien remplir toutes les cellules",
+                        "Erreur cellules vide",
+                        JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
                     String nomArmure = txtNomArmure.getText();
                     float impactVitesseArmure = Float.valueOf(txtImpactVitesseArmure.getText());
                     float defenseArmure = Float.valueOf(txtDefense.getText());
-                      String idArmure = (String)cbIDArmure.getSelectedItem();
+                    String idArmure = (String) cbIDArmure.getSelectedItem();
                     String id[] = idArmure.split("-");
-                    updateArumre(id[0],nomArmure, impactVitesseArmure, defenseArmure);
+                    updateArumre(id[0], nomArmure, impactVitesseArmure, defenseArmure);
                     Menu menu = new Menu(fenetre);
                     fenetre.setContentPane(menu);
                     fenetre.pack();
                 } catch (NumberFormatException ne) {
+                    JOptionPane.showMessageDialog(fenetre,
+                            "Le formats d'une cellule ou plusieurs cellules est incorrect",
+                            "Erreur Formatge de données",
+                            JOptionPane.ERROR_MESSAGE);
 
                 }
-                System.out.println("true");
 
             }
         }
