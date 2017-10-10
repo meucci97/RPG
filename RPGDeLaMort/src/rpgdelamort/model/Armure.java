@@ -14,6 +14,11 @@ public class Armure extends Equipement {
     public float getDefense() {
         return defense;
     }
+
+    public Armure(int id, String nom, float impactVitesse,float defense) {
+        super(id, nom, impactVitesse);
+        this.defense = defense;
+    }
         
         
 

@@ -15,9 +15,7 @@ public abstract class Equipement {
         return impactVitesse;
     }
 
-    public int getNiveauMin() {
-        return niveauMin;
-    }
+  
 
     public void setNom(String nom) {
         this.nom = nom;
@@ -27,13 +25,19 @@ public abstract class Equipement {
         this.impactVitesse = impactVitesse;
     }
 
-    public void setNiveauMin(int niveauMin) {
-        this.niveauMin = niveauMin;
+  
+
+       public Equipement() {
+        
+    }
+    public Equipement(int id, String nom, float impactVitesse) {
+        this.id = id;
+        this.nom = nom;
+        this.impactVitesse = impactVitesse;
     }
 
     protected int id;
     protected String nom;
     protected float impactVitesse;
-    protected int niveauMin;
 
 }
